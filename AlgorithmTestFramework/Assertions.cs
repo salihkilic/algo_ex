@@ -1,6 +1,4 @@
-﻿﻿using System;
-
-namespace AlgorithmTestFramework;
+﻿namespace AlgorithmTestFramework;
 
 public static class Assertions
 {
