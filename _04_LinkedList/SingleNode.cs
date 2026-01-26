@@ -1,0 +1,14 @@
+﻿namespace _04_LinkedList;
+
+public class SingleNode<T> where T : IComparable<T>
+{
+    public T Value { get; private set; }
+    public SingleNode<T>? Next { get; set; }
+
+    public SingleNode(T value, SingleNode<T>? next = null)
+    {
+        Value = value;
+        Next = next;
+    }
+
+}

@@ -74,7 +74,6 @@ public class NumArray1D<T> where T : IComparable<T>, INumber<T>
         if (_data.Length == 0) return T.One; // Empty product is 1
 
         var result = T.One;
-        bool hasNonZero = false;
 
         for (int x = 0; x < _data.Length; x++)
         {
@@ -85,7 +84,6 @@ public class NumArray1D<T> where T : IComparable<T>, INumber<T>
             else
             {
                 result *= _data[x];
-                hasNonZero = true;
             }
         }
         
