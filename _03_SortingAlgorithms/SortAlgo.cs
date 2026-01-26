@@ -100,5 +100,4 @@ public class SortAlgo<T> where T : IComparable<T>
             k++;
         }
     }
-
 }

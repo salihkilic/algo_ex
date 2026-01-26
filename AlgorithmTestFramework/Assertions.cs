@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 
 namespace AlgorithmTestFramework;
 
@@ -8,6 +8,12 @@ public static class Assertions
     {
         if (!object.Equals(actual, expected))
             throw new TestFailedException($"Expected {expected} but got {actual}");
+    }
+
+    public static void AssertEqual<T>(T actual, T expected, string message)
+    {
+        if (!object.Equals(actual, expected))
+            throw new TestFailedException($"{message} Expected {expected} but got {actual}");
     }
 
     public static void AssertSorted<T>(T[]? actual, T[] expected) where T : IComparable<T>
