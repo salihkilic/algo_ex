@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_10_Graph", "_10_Graph\_10_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_11_MemoizedFibonacci", "_11_MemoizedFibonacci\_11_MemoizedFibonacci.csproj", "{4E309BE8-FE53-4D79-803B-60EABAF7EA84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_12_FloydWarshall", "_12_FloydWarshall\_12_FloydWarshall.csproj", "{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +197,18 @@ Global
 		{4E309BE8-FE53-4D79-803B-60EABAF7EA84}.Release|x64.Build.0 = Release|Any CPU
 		{4E309BE8-FE53-4D79-803B-60EABAF7EA84}.Release|x86.ActiveCfg = Release|Any CPU
 		{4E309BE8-FE53-4D79-803B-60EABAF7EA84}.Release|x86.Build.0 = Release|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Debug|x64.Build.0 = Debug|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Debug|x86.Build.0 = Debug|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Release|x64.ActiveCfg = Release|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Release|x64.Build.0 = Release|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Release|x86.ActiveCfg = Release|Any CPU
+		{EBE139E1-BB5A-4F8B-823B-3220EF0344E2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
