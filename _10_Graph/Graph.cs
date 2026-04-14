@@ -23,39 +23,21 @@ public class Graph
     public string Bft(int root)
     {
         // create empty queue and enqueue the root
-        var q = new Queue<int>();
-        q.Enqueue(root);
 
         // create array of booleans to keep track of visited nodes and set the root flag to true
-        var visited = new bool[Count];
-        visited[root] = true;
-
-        string result = "";
 
         // Loop until queue is empty
-        while (q.Count > 0)
-        {
-            // dequeue a node
-            var currentNode = q.Dequeue();
-
-            // add the current node (followed by a space) to the string
-            result += $"{currentNode} ";            
-
-            // find neighbors of current
-            var buurmannen = Neighbors(currentNode);
+        
+        // dequeue a node
             
-            // enqueue all neighbors which are not visited yet and set them to visited
-            foreach (int buurman in buurmannen)
-            {
-                // Set visit
-                if (!visited[buurman]) 
-                {
-                    q.Enqueue(buurman);
-                    visited[buurman] = true;
-                } 
-            }
-        }
-        return result;
+
+        // add the current node (followed by a space) to the string
+            
+
+        // find neighbors of current
+
+        // enqueue all neighbors which are not visited yet and set them to visited
+        throw new NotImplementedException();
     }
 
     //Nodes adjacent to a given node
@@ -93,45 +75,22 @@ public class Graph
     //Depth First Traveral
     public string DFT(int root)
     {
-        // Initialize an empty stack and push the root node onto it
-        var stack = new Stack<int>();
-        stack.Push(root);
+        // create empty stack and push the root into it
 
-        // Create an array to track visited nodes
-        var visited = new bool[Count];
-        visited[root] = true;
+        // create array of booleans to keep track of visited nodes
 
-        // Initialize an empty string to store the traversal result
-        string result = $"{root} ";
+        // Loop until stack is empty
+        
+        // pop a node from the stack 
+      
+        // check if current node is not visited yet
+        // add current node to the string (followed by a space) and set it to visited
 
-        // Loop until the stack is empty
-        while (stack.Count > 0)
-        {
-            // Pop a node from the stack
-            var currentNode = stack.Pop();
+        // find neighbors (in reversed order) of current  
+            
+        // push all neighbors 
 
-            // If the node is not visited, visit it
-            if (!visited[currentNode])
-            {
-                // Add the current node to the result string
-                result += $"{currentNode} ";
-
-                // Mark the current node as visited
-                visited[currentNode] = true;
-            }
-            // Get the neighbors of the current node (in reversed order)
-            var neighbors = NeighborsReversed(currentNode);
-
-            // Push all unvisited neighbors onto the stack
-            foreach (var neighbor in neighbors)
-            {
-                if (!visited[neighbor])
-                {
-                    stack.Push(neighbor);
-                }
-            }
-        }
-        return result;
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -148,60 +107,22 @@ public class Graph
     //Dijkstra's algorithm SingleSourceShortestPath 
     public Tuple<double[], int[]> SingleSourceShortestPath(int source)
     {
-        // Init
-        int nodeCount = Count;
-        double[] dist = new double[nodeCount];
-        int[] prev = new int[nodeCount]; 
-        bool[] unvisitedNodes = new bool[nodeCount];
+        // initialization of distance, prev and unvisitedNodes
+        // default distance: double.PositiveInfinity
+        // default previous node: -1
 
-        for (int i = 0; i < nodeCount; i++)
-        {
-            dist[i] = double.PositiveInfinity;
-            prev[i] = -1;
-            unvisitedNodes[i] = true; 
-        }
+        // set distance of source
+        
+        // Loop until unvisitedNodes is empty
+  
+        // find closest node in unvisitedNodes
+       
+        // remove the closest node from unvisitedNodes
 
-        dist[source] = 0; 
+        //considering all neighbors of the closest node
 
-        while (true)
-        {
-            int pickedNode = -1;
-            double minDist = double.PositiveInfinity;
-            for (int i = 0; i < nodeCount; i++)
-            {
-                if (unvisitedNodes[i] && dist[i] < minDist)
-                {
-                    minDist = dist[i];
-                    pickedNode = i;
-                }
-            }
+        // calculate distance and update distance (and previous node) if smaller
 
-            // Couldn't find node
-            if (pickedNode == -1) break;
-
-            // Mark as visited
-            unvisitedNodes[pickedNode] = false;
-
-            // Check all neighbors of the nearest node
-            for (int v = 0; v < nodeCount; v++)
-            {
-                // Check if there's an edge between pickedNode and v and v is still unvisited
-                if (AdjacencyMatrix[pickedNode, v] < double.PositiveInfinity && unvisitedNodes[v])
-                {
-                    double alt = dist[pickedNode] + AdjacencyMatrix[pickedNode, v];
-
-                    // If a shorter path to v is found
-                    if (alt < dist[v])
-                    {
-                        // Update the distance
-                        dist[v] = alt; 
-                        // Update the previous node
-                        prev[v] = pickedNode;   
-                    }
-                }
-            }
-        }
-        // Man this was hard
-        return new Tuple<double[], int[]>(dist, prev);
+        throw new NotImplementedException();
     }
 }

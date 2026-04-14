@@ -15,14 +15,7 @@ public static class DynamicProgramming {
     public static long FibonacciDynamic(long n, long[] storedResults)
     {    
         Utils.ShowCallStack(false); //DO NOT comment this line of code
-    
+        throw new NotImplementedException();
         //ToDo: remove the above exception and provide recursive implementation of fibonacciDynamic 
-        if (n == 0) return 0; 
-        if (n <= 1 ) return 1;
-        if (storedResults[n] == 0)
-        {
-            storedResults[n] = FibonacciDynamic(n - 1, storedResults) + FibonacciDynamic(n - 2, storedResults);
-        }
-        return storedResults[n];
     }
 }
