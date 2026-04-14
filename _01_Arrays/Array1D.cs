@@ -22,21 +22,38 @@ public class NumArray1D<T> where T : IComparable<T>, INumber<T>
     // Example: Aggregate((a, b) => a + b) should result in the Sum of the array.
     public T? Aggregate(Func<T, T, T> fx)
     {
-        throw new NotImplementedException();
+        T? result = _data[0];
+        for (int i = 1; i < _data.Count(); i++)
+        {
+            result = fx(result, _data[i]);
+        }
+        return result;
     }
 
     // TODO: Find the maximum value in the array.
     // Iterate through the array and keep track of the largest element found so far.
     public T? Max()
     {
-        throw new NotImplementedException();
+        var result = _data[0];
+        for (int i = 1; i < _data.Count(); i++)
+        {
+            if (_data[i] > result)
+                result = _data[i];
+        }
+        return result;
     }
 
     // TODO: Find the minimum value in the array.
     // Iterate through the array and keep track of the smallest element found so far.
     public T? Min()
     {
-        throw new NotImplementedException();
+        var result = _data[0];
+        for (int i = 1; i < _data.Count(); i++)
+        {
+            if (_data[i] < result)
+                result = _data[i];
+        }
+        return result;
     }
 
     // TODO: Calculate the product of all elements in the array.
@@ -45,13 +62,25 @@ public class NumArray1D<T> where T : IComparable<T>, INumber<T>
     // If IgnoreZeros is true, skip zero values (treat them as 1).
     public T? Product(bool IgnoreZeros = true)
     {
-        throw new NotImplementedException();
+        var result = _data[0];
+        for (int i = 1; i < _data.Count(); i++)
+        {
+            if (IgnoreZeros && _data[i] == default(T))
+                continue;
+           result *= _data[i];
+        }
+        return result;
     }
 
     // TODO: Calculate the sum of all elements in the array.
     // Iterate through the array and add each element to a running total.
     public T? Sum()
     {
-        throw new NotImplementedException();
+        var result = _data[0];
+        for (int i = 1; i < _data.Count(); i++)
+        {
+            result += _data[i];
+        }
+        return result;
     }
 }
