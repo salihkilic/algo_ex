@@ -10,5 +10,4 @@ public interface ILinkedList<T> : IEnumerable<T> where T : IComparable<T>
     bool Contains(T value);
     void Clear();
     int Count { get; }
-    IEnumerator<T> GetEnumerator();
 }
