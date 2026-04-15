@@ -3,30 +3,35 @@
 
 public class Stack<T> : IStack<T>
 {
+    private T[] _items;
+    private int _capacity;
+    private int _topIndex = -1;
+    
     // TODO: Return true if the stack is empty (no elements), otherwise false.
-    public bool Empty => throw new NotImplementedException();
+    public bool Empty => _topIndex == -1;
 
     // TODO: Return true if the internal array is full (reached capacity), otherwise false.
-    public bool Full => throw new NotImplementedException();
+    public bool Full => Count == _capacity;
 
     // TODO: Return the number of elements currently in the stack.
-    public int Count => throw new NotImplementedException();
+    public int Count => _topIndex + 1;
 
     // TODO: Return the current capacity (total size) of the internal array.
-    public int Size => throw new NotImplementedException();
+    public int Size => _capacity;
     
 
     // TODO: Initialize the stack with a specified initial size.
     public Stack(int size = 4)
     {
-        throw new NotImplementedException();
+        _capacity = size;
+        _items = new T[_capacity];
     }
 
     // TODO: Return the item at the top of the stack without removing it.
     // If the stack is empty, return the default value for type T.
     public T? Peek()
     {
-        throw new NotImplementedException();
+        return _topIndex != -1 ? _items[_topIndex] : default;
     }
 
     // TODO: Remove and return the item at the top of the stack.
@@ -34,7 +39,7 @@ public class Stack<T> : IStack<T>
     // Ensure the top index is updated.
     public T? Pop()
     {
-        throw new NotImplementedException();
+        return _topIndex != -1 ? _items[_topIndex--] : default;
     }
 
     // TODO: Push an item onto the top of the stack.
@@ -42,6 +47,21 @@ public class Stack<T> : IStack<T>
     // 2. If the stack IS full, create a larger array (e.g., +1 size or double), copy existing items, and then add the new item.
     public void Push(T item)
     {
-        throw new NotImplementedException();
+        // Array is not full
+        if (!Full)
+        {
+            _items[++_topIndex] = item;
+            return;
+        }
+        
+        // Array is full
+        var newArray = new T[++_capacity];
+        for (int i = 0; i < _capacity - 1; i++)
+        {
+            newArray[i] = _items[i];
+        }
+
+        _items = newArray;
+        _items[++_topIndex] = item;
     }
 }

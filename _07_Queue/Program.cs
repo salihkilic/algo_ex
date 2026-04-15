@@ -29,6 +29,9 @@ public static class Program
 
         TestRunner.RunTest("Repeated Enqueue/Dequeue", TestQueueClearOrResetImplicitly, 
             "Repeatedly adding and removing should work indefinitely without index out of bounds.");
+
+        TestRunner.RunTest("Queue: Full After Circular Wrapping", TestQueueFullAfterCircularWrapping,
+            "Queue should correctly identify Full state after wrapping around. Verify FIFO order is preserved.");
     }
 
     /// <summary>
@@ -174,4 +177,39 @@ public static class Program
             Assertions.AssertEqual(true, queue.Empty, "Should be empty.");
         }
     }
+
+    /// <summary>
+    /// Tests the queue's behavior and state reporting after the internal array has been wrapped around.
+    /// Specifically checks if the queue still reports full correctly and maintains FIFO order.
+    /// </summary>
+    private static void TestQueueFullAfterCircularWrapping()
+    {
+        var queue = new Queue<int>(4);  // Increased capacity to 4
+
+        // Fill the queue to capacity
+        queue.Enqueue(1);
+        queue.Enqueue(2);
+        queue.Enqueue(3);
+        queue.Enqueue(4);
+        Assertions.AssertEqual(true, queue.Full, "Queue should be full.");
+
+        // Dequeue two items to create wrapping space
+        queue.Dequeue();
+        queue.Dequeue();
+        Assertions.AssertEqual(2, queue.Count, "Count should be 2 after 2 dequeues.");
+
+        // Enqueue two more items to wrap around
+        queue.Enqueue(5);
+        queue.Enqueue(6);
+        Assertions.AssertEqual(true, queue.Full, "Queue should be full after wrapping around.");
+
+        // Dequeue all items to check order (should be 3,4,5,6 in FIFO order)
+        Assertions.AssertEqual(queue.Dequeue(), 3, "Expect 3 (FIFO order).");
+        Assertions.AssertEqual(queue.Dequeue(), 4, "Expect 4.");
+        Assertions.AssertEqual(queue.Dequeue(), 5, "Expect 5.");
+        Assertions.AssertEqual(queue.Dequeue(), 6, "Expect 6.");
+
+        Assertions.AssertEqual(true, queue.Empty, "Queue should be empty after dequeuing all items.");
+    }
+
 }
