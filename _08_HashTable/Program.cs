@@ -36,6 +36,23 @@ public static class Program
         // Note: The provided implementation might fail this if it doesn't handle deletion gaps (tombstones) correctly.
         TestRunner.RunTest("Delete Breaking Search Chain", TestDeleteBreaksChain, 
             "Removing an item that caused a collision probe should not prevent finding other collided items (Search chain integrity).");
+
+        Console.WriteLine("\nTesting Edge Cases and Reuse...");
+        TestRunner.RunTest("Empty Table Operations", TestEmptyTableOperations,
+            "Operations on uninitialized tables should handle gracefully.");
+
+        TestRunner.RunTest("Table Reuse After Delete", TestTableReuse,
+            "Deleted slots should be reusable for new entries.");
+
+        TestRunner.RunTest("Mixed Operations", TestMixedOperations,
+            "Add, delete, and re-add patterns should work correctly.");
+
+        Console.WriteLine("\nTesting Complex Collision Scenarios...");
+        TestRunner.RunTest("Multiple Collisions", TestManyCollisions,
+            "Should handle multiple items colliding to same index.");
+
+        TestRunner.RunTest("Delete Multiple Collisions", TestDeleteMultipleCollisions,
+            "Deleting from collision chain should preserve other items.");
     }
 
     /// <summary>
@@ -177,5 +194,99 @@ public static class Program
         Assertions.AssertEqual(val, "Collided1", 
             "Should still find collided item after removing the item that caused the collision.");
     }
-}
 
+    /// <summary>
+    /// Tests that empty table operations work correctly.
+    /// </summary>
+    private static void TestEmptyTableOperations()
+    {
+        var hashTable = new HashTable<string, int>();
+        
+        // Find in uninitialized table
+        int val = hashTable.Find("Missing");
+        Assertions.AssertEqual(val, 0, "Find in empty table should return default.");
+        
+        // Delete from uninitialized table
+        bool deleted = hashTable.Delete("Missing");
+        Assertions.AssertEqual(deleted, false, "Delete from empty table should return false.");
+        
+        // Add to uninitialized table
+        bool added = hashTable.Add("Key", 10);
+        Assertions.AssertEqual(added, false, "Add to uninitialized table should return false.");
+    }
+
+    /// <summary>
+    /// Tests that table can be reused after being emptied.
+    /// </summary>
+    private static void TestTableReuse()
+    {
+        var hashTable = new HashTable<string, int>(5);
+        
+        // Add and delete
+        hashTable.Add("A", 1);
+        hashTable.Delete("A");
+        Assertions.AssertEqual(hashTable.Find("A"), 0, "Item should be deleted.");
+        
+        // Reuse the slot
+        hashTable.Add("B", 2);
+        Assertions.AssertEqual(hashTable.Find("B"), 2, "Should be able to reuse deleted slot.");
+    }
+
+    /// <summary>
+    /// Tests mixed operations (add, find, delete, add).
+    /// </summary>
+    private static void TestMixedOperations()
+    {
+        var hashTable = new HashTable<string, int>(10);
+        
+        // Add
+        hashTable.Add("X", 100);
+        Assertions.AssertEqual(hashTable.Find("X"), 100, "Should find X after add.");
+        
+        // Delete
+        hashTable.Delete("X");
+        Assertions.AssertEqual(hashTable.Find("X"), 0, "Should not find X after delete.");
+        
+        // Add again with different value
+        hashTable.Add("X", 200);
+        Assertions.AssertEqual(hashTable.Find("X"), 200, "Should find X with new value.");
+    }
+
+    /// <summary>
+    /// Tests multiple collisions in succession.
+    /// </summary>
+    private static void TestManyCollisions()
+    {
+        var hashTable = new HashTable<int, string>(4);
+        
+        // Force multiple collisions by adding keys that hash to same index
+        hashTable.Add(0, "Zero");
+        hashTable.Add(4, "Four");     // 4 % 4 = 0, collision
+        hashTable.Add(8, "Eight");    // 8 % 4 = 0, collision
+        
+        // Verify all are findable despite collisions
+        Assertions.AssertEqual(hashTable.Find(0), "Zero", "Should find first item.");
+        Assertions.AssertEqual(hashTable.Find(4), "Four", "Should find second collided item.");
+        Assertions.AssertEqual(hashTable.Find(8), "Eight", "Should find third collided item.");
+    }
+
+    /// <summary>
+    /// Tests that deleting multiple collided items preserves chain integrity.
+    /// </summary>
+    private static void TestDeleteMultipleCollisions()
+    {
+        var hashTable = new HashTable<int, string>(5);
+        
+        // Create a collision chain: 0, 5, 10 all hash to index 0
+        hashTable.Add(0, "Base");
+        hashTable.Add(5, "Collided1");
+        hashTable.Add(10, "Collided2");
+        
+        // Delete the middle collided item
+        hashTable.Delete(5);
+        
+        // Both remaining items should still be findable
+        Assertions.AssertEqual(hashTable.Find(0), "Base", "Base should still be found.");
+        Assertions.AssertEqual(hashTable.Find(10), "Collided2", "Collided2 should be found after deleting Collided1.");
+    }
+}
