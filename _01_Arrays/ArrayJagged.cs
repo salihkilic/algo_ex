@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace _01_Arrays;
 
@@ -15,7 +17,24 @@ public class ArrayJagged
     // Output: Tuple(1, 10)
     public static Tuple<int, T>? MaxRowIndexSum<T>(T[][] arrJagged) where T : INumber<T>
     {
-        throw new NotImplementedException();
+        var result = new Tuple<int, T>(0, arrJagged[0][0]);
+
+        for (int i = 0; i < arrJagged.Length; i++)
+        {
+            var rowsum = arrJagged[i][0];
+            int latestRow = 0;
+
+            for (int j = 1; j < arrJagged[i].Length; j++)
+            {
+                rowsum += arrJagged[i][j];
+                latestRow = j;
+            }
+            if (arrJagged[i][latestRow] > result.Item2)
+            {
+                result = new Tuple<int, T>(i, rowsum);
+            }
+        }
+        return result;
     }
 
     // TODO: Find the column with the maximum sum and return its values.
@@ -36,7 +55,52 @@ public class ArrayJagged
     // Output: [10, 20]
     public static T?[] MaxCol<T>(T[][] arrJagged) where T : INumber<T>
     {
-        throw new NotImplementedException();
+        int maxColumn = 0;
+        for (int i = 0; i < arrJagged.Length; i++)
+        {
+            if (maxColumn < arrJagged[i].Length)
+            {
+                maxColumn = arrJagged[i].Length;
+            }
+        }
+
+        T highest = arrJagged[0][0];
+        int highestCol = 0;
+        int amount = 0;
+
+        for (int col = 0; col < maxColumn; col++)
+        {
+            T sum = arrJagged[0][col];
+            for (int row = 1; row < arrJagged.Length; row++)
+            {
+                if (col < arrJagged[row].Length)
+                {
+                    sum += arrJagged[row][col];
+                    amount++;
+                }
+                else
+                {
+                    sum += T.Zero;
+                }
+            }
+            if (sum > highest)
+            {
+                highest = sum;
+                highestCol = col;
+            }
+        }
+
+        T[] result= new T[amount];
+        int index = 0;
+        for (int row = 0; row < arrJagged.Length; row++)
+        {
+            if (arrJagged[row].Length > highestCol)
+            {
+                result[index] = arrJagged[row][highestCol];
+                index++;
+            }
+        }
+        return result;
     }
 
     // TODO: Split an array of Tuples into separate rows.
