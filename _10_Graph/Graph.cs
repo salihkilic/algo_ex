@@ -22,22 +22,32 @@ public class Graph
     //Breadth First Traversal
     public string Bft(int root)
     {
+        string resultStr = "";
         // create empty queue and enqueue the root
+        Queue<int> traverse = new Queue<int>();
+        traverse.Enqueue(root);
 
         // create array of booleans to keep track of visited nodes and set the root flag to true
+        bool[] closed = new bool[Count];
+        closed[root] = true;
 
         // Loop until queue is empty
-        
-        // dequeue a node
-            
+        while (traverse.Count > 0)
+        {
+            int current = traverse.Dequeue();
+            resultStr += " " + current.ToString();
 
-        // add the current node (followed by a space) to the string
-            
 
-        // find neighbors of current
-
-        // enqueue all neighbors which are not visited yet and set them to visited
-        throw new NotImplementedException();
+            foreach (var n in Neighbors(current))
+            {
+                if (!closed[n])
+                {
+                    traverse.Enqueue(n);
+                    closed[n] = true;
+                }
+            }
+        }
+        return resultStr;
     }
 
     //Nodes adjacent to a given node
@@ -75,22 +85,46 @@ public class Graph
     //Depth First Traveral
     public string DFT(int root)
     {
+        string resultStr = "";
+        // create empty queue and enqueue the root
+        Stack<int> traverse = new Stack<int>();
+        traverse.Push(root);
+
+        // create array of booleans to keep track of visited nodes and set the root flag to true
+        bool[] closed = new bool[Count];
+        closed[root] = true;
+
+        // Loop until queue is empty
+        while (traverse.Count > 0)
+        {
+            int current = traverse.Pop();
+            resultStr += " " + current.ToString();
+
+
+            foreach (var n in NeighborsReversed(current))
+            {
+                if (!closed[n])
+                {
+                    traverse.Push(n);
+                    closed[n] = true;
+                }
+            }
+        }
+        return resultStr;
         // create empty stack and push the root into it
 
         // create array of booleans to keep track of visited nodes
 
         // Loop until stack is empty
-        
+
         // pop a node from the stack 
-      
+
         // check if current node is not visited yet
         // add current node to the string (followed by a space) and set it to visited
 
         // find neighbors (in reversed order) of current  
-            
-        // push all neighbors 
 
-        throw new NotImplementedException();
+        // push all neighbors 
     }
 
     /// <summary>
@@ -111,18 +145,52 @@ public class Graph
         // default distance: double.PositiveInfinity
         // default previous node: -1
 
+
+
+        double[] dist = new double[Count];
+        int[] prev = new int[Count];
+        bool[] visited = new bool[Count];
+
+        for (int i = 0; i < Count; i++)
+        {
+            dist[i] = double.PositiveInfinity;
+            prev[i] = -1;
+        }
         // set distance of source
-        
-        // Loop until unvisitedNodes is empty
-  
-        // find closest node in unvisitedNodes
-       
-        // remove the closest node from unvisitedNodes
+        dist[source] = 0;
 
-        //considering all neighbors of the closest node
+        for (int step = 0; step < Count; step++)
+        {
+            int current = -1;
+            double smallest = double.PositiveInfinity;
 
-        // calculate distance and update distance (and previous node) if smaller
+            for (int i = 0; i < Count; i++)
+            {
+                if (!visited[i] && dist[i] < smallest)
+                {
+                    smallest = dist[i];
+                    current = i;
+                }
+            }
 
-        throw new NotImplementedException();
+            if (current == -1)
+                break;
+
+            visited[current] = true;
+
+            foreach(var n in Neighbors(current))
+            {
+                if (visited[n]) continue;
+
+                var newDist = dist[current] + AdjacencyMatrix[current, n];
+
+                if (newDist < dist[n])
+                {
+                    dist[n] = newDist;
+                    prev[n] = current;
+                }
+            }
+        }
+        return Tuple.Create(dist, prev);
     }
 }

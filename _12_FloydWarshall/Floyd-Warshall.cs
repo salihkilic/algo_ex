@@ -20,7 +20,34 @@ public class FloydWarshall
     public static Tuple<double[,], int[,]> Init(double[,] graph)
     {
         //ToDo 1.1 Initialize the distance and next matrix
-        throw new NotImplementedException();
+        int edges = graph.GetLength(0);
+        double[,] dist = new double[edges,edges];
+        int[,] nextIndex = new int[edges,edges];
+
+        for (int i = 0; i < edges; i++)
+        {
+            for (int j = 0; j < edges; j++)
+            {
+                dist[i,j] = graph[i,j];
+
+                if (i == j)
+                {
+                    dist[i, j] = 0;
+                    nextIndex[i,j] = -1;
+                }
+                else if (graph[i,j] == double.PositiveInfinity)
+                {
+                    nextIndex[i,j] = -1;
+                }
+                else
+                {
+                    nextIndex[i, j] = j;
+                }
+
+            }
+        }
+        return new Tuple<double[,], int[,]>(dist, nextIndex);
+
     }
     
     /// <summary>
@@ -35,8 +62,24 @@ public class FloydWarshall
     public static Tuple<double[,], int[,]> AllPairShortestPath(double[,] graph)
     {
         //ToDo 1: Floyd-Warshall Algorithm, All Pairs Shortest Path
-        throw new NotImplementedException();
         //Includes 1.1
         var (dist, next) = Init(graph);
+        int edges = graph.GetLength(0);
+
+        for (int k = 0; k < edges; k++)
+        {
+            for (int i = 0; i < edges; i++)
+            {
+                for (int j = 0; j < edges; j++)
+                {
+                    if (dist[i,k] + dist[k,j] < dist[i,j])
+                    {
+                        dist[i, j] = dist[i, k] + dist[k,j];
+                        next[i,j] = next[i,k];
+                    }
+                }
+            }
+        }
+        return new Tuple<double[,], int[,]>(dist, next);
     }
 }
