@@ -3,7 +3,7 @@
 public class Graph
 {
     public double[,] AdjacencyMatrix { get; set; }
-    public int Count { get { return AdjacencyMatrix.GetLength(0); } }  //Number of nodes in the graph
+    public int Count => AdjacencyMatrix.GetLength(0); //Number of nodes in the graph
 
     public Graph(double[,] matrix)
     {
@@ -38,31 +38,6 @@ public class Graph
 
         // enqueue all neighbors which are not visited yet and set them to visited
         throw new NotImplementedException();
-    }
-
-    //Nodes adjacent to a given node
-    public List<int> Neighbors(int node)
-    {
-        List<int> neighbors = new List<int>();
-        for (int i = 0; i < AdjacencyMatrix.GetLength(0); i++)
-        {
-            if (AdjacencyMatrix[node, i] < Double.PositiveInfinity)
-                neighbors.Add(i);
-        }
-        return neighbors;
-    }
-
-    //Nodes (adjacent to a given node) to be visited in reversed order
-    public List<int> NeighborsReversed(int node) 
-    {
-        List<int> neighbors = new List<int>();
-        for (int i = 0; i < AdjacencyMatrix.GetLength(0); i++)
-        {
-            if (AdjacencyMatrix[node, i] < Double.PositiveInfinity)
-                neighbors.Add(i);
-        }
-        neighbors.Reverse();
-        return neighbors;
     }
     
     /// <summary>
@@ -124,5 +99,32 @@ public class Graph
         // calculate distance and update distance (and previous node) if smaller
 
         throw new NotImplementedException();
+    }
+    
+    // UTILITY METHODS
+    
+    //Nodes adjacent to a given node
+    public List<int> Neighbors(int node)
+    {
+        List<int> neighbors = new List<int>();
+        for (int i = 0; i < AdjacencyMatrix.GetLength(0); i++)
+        {
+            if (AdjacencyMatrix[node, i] < Double.PositiveInfinity)
+                neighbors.Add(i);
+        }
+        return neighbors;
+    }
+
+    //Nodes (adjacent to a given node) to be visited in reversed order
+    public List<int> NeighborsReversed(int node) 
+    {
+        List<int> neighbors = new List<int>();
+        for (int i = 0; i < AdjacencyMatrix.GetLength(0); i++)
+        {
+            if (AdjacencyMatrix[node, i] < Double.PositiveInfinity)
+                neighbors.Add(i);
+        }
+        neighbors.Reverse();
+        return neighbors;
     }
 }

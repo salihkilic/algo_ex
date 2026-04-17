@@ -59,6 +59,9 @@ public static class Program
         TestRunner.RunTest("Remove Root - Single Node", TestRemoveRootSingleNode,
             "Removing the only node in the tree should result in an empty tree.");
 
+        TestRunner.RunTest("Remove Root with One Child - Parent Invariant", TestRemoveRootOneChildParentInvariant,
+            "When removing root with one child, the new root's Parent must be null (invariant check).");
+
         TestRunner.RunTest("Remove Non-Existent Value", TestRemoveNonExistent,
             "Attempting to remove a non-existent value should return false.");
 
@@ -292,6 +295,25 @@ public static class Program
         bool removed = bst.Remove(42);
         Assertions.AssertEqual(true, removed, "Removing only node should return true.");
         Assertions.AssertEqual(bst.Root, null, "Tree should be completely empty.");
+    }
+
+    private static void TestRemoveRootOneChildParentInvariant()
+    {
+        // This test catches the bug if "replacement?.Parent = null;" is removed
+        var bst = new Bst<int>();
+        bst.Insert(10);
+        bst.Insert(5);  // Root has only left child
+
+        bool removed = bst.Remove(10);
+        Assertions.AssertEqual(true, removed, "Removing root should return true.");
+        
+        // Verify the new root is correct
+        Assertions.AssertEqual(bst.Root.Value, 5, "New root should be 5.");
+        
+        // CRITICAL: Verify the Parent pointer invariant
+        // The root must always have Parent == null
+        Assertions.AssertEqual(bst.Root.Parent, null, 
+            "Root's Parent must be null (if this fails, 'replacement?.Parent = null;' was removed).");
     }
 
     private static void TestRemoveNonExistent()
