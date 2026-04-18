@@ -16,11 +16,8 @@ public static class DynamicProgramming {
     {    
         Utils.ShowCallStack(false); //DO NOT comment this line of code
         
-        if (n <= 1) return n;
+        // Write your code under this comment, not above. That ShowCallstack thing is weird.
         
-        if (storedResults[n] == 0)
-            storedResults[n] = FibonacciDynamic(n - 1, storedResults) + FibonacciDynamic(n - 2, storedResults);
-
-        return storedResults[n];
+        throw new NotImplementedException();
     }
 }

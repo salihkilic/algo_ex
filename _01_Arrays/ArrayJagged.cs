@@ -15,33 +15,7 @@ public class ArrayJagged
     // Output: Tuple(1, 10)
     public static Tuple<int, T>? MaxRowIndexSum<T>(T[][] arrJagged) where T : INumber<T>
     {
-        if (arrJagged.Length == 0) return null;
-
-        var maxIndex = 0;
-        var maxValue = T.Zero;
-        
-        // Calculate first row to avoid dealing with negative values
-        foreach (var number in arrJagged[0])
-        {
-            maxValue += number;
-        }
-
-        for (var i = 1; i < arrJagged.Length; i++)
-        {
-            var total = T.Zero;
-            foreach (var number in arrJagged[i])
-            {
-                total += number;
-            }
-
-            if (total > maxValue)
-            {
-                maxIndex = i;
-                maxValue = total;
-            }
-        }
-
-        return new Tuple<int, T>(maxIndex, maxValue);
+        throw new NotImplementedException();
     }
 
     // TODO: Find the column with the maximum sum and return its values.
@@ -62,48 +36,7 @@ public class ArrayJagged
     // Output: [10, 20]
     public static T?[] MaxCol<T>(T[][] arrJagged) where T : INumber<T>
     {
-        // Find longest col
-        var longestRow = 0;
-        foreach (var row in arrJagged)
-        {
-            if (row.Length > longestRow) 
-                longestRow = row.Length;
-        }
-        
-        // Calculate all sums
-        var sums = new T[longestRow];
-        for (int i = 0; i < arrJagged.Length; i++)
-        {
-            for (int j = 0; j < arrJagged[i].Length; j++)
-            {
-                sums[j] += arrJagged[i][j];
-            }
-        }
-
-        // Find highest value in sums
-        var maxIndex = 0;
-        var maxValue = T.Zero;
-        for (int i=0; i < sums.Length; i++)
-        {
-            if (sums[i] > maxValue)
-            {
-                maxValue = sums[i];
-                maxIndex = i;
-            }
-        }
-
-        // Find the values of that col and return
-        var results = new T?[arrJagged.Length];
-
-        for (int i = 0; i < arrJagged.Length; i++)
-        {
-            if (arrJagged[i].Length < maxIndex + 1)
-                results[i] = T.Zero;
-            else
-                results[i] = arrJagged[i][maxIndex];
-        }
-
-        return results;
+        throw new NotImplementedException();
     }
 
     // TODO: Split an array of Tuples into separate rows.
@@ -114,20 +47,7 @@ public class ArrayJagged
     // - Row 2: All Item3 values.
     public static T[][]? Split<T>(Tuple<T, T, T>[] input)
     {
-        var row1 = new T[input.Length];
-        var row2 = new T[input.Length];
-        var row3 = new T[input.Length];
-
-        var index = 0;
-        foreach (var tuple in input)
-        {
-            row1[index] = tuple.Item1;
-            row2[index] = tuple.Item2;
-            row3[index] = tuple.Item3;
-            index++;
-        }
-
-        return [row1, row2, row3];
+        throw new NotImplementedException();
     }
 
     // TODO: Zip two arrays into a single 2D array.
@@ -137,25 +57,6 @@ public class ArrayJagged
     // If one array is shorter than the other, fill the missing spots with default(T) (e.g. 0).
     public static T?[,]? Zip<T>(T[] a, T[] b)
     {        
-        // Get longest
-        var longest = a.Length > b.Length 
-            ? a.Length 
-            : b.Length;
-
-        var results = new T?[longest, 2];
-        
-        for (int i = 0; i < longest; i++)
-        {
-            results[i, 0] = a.Length > i
-                ? a[i]
-                : default;
-            
-            results[i, 1] = b.Length > i
-                ? b[i]
-                : default;
-        }
-
-        return results;
-
+        throw new NotImplementedException();
     }
 }

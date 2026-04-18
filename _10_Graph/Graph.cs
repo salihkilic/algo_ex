@@ -22,39 +22,7 @@ public class Graph
     //Breadth First Traversal
     public string Bft(int root)
     {
-        // create empty queue and enqueue the root
-        var q = new Queue<int>();
-        q.Enqueue(root);
-
-        // create array of booleans to keep track of visited nodes and set the root flag to true
-        var visited = new bool[Count];
-        visited[root] = true;
-        var result = string.Empty;
-
-        // Loop until queue is empty
-        while (q.Count > 0)
-        {
-            // dequeue a node
-            var node = q.Dequeue();
-
-            // add the current node (followed by a space) to the string
-            result += $"{node} ";
-
-            // find neighbors of current
-            var buurmannen = Neighbors(node);
-
-            // enqueue all neighbors which are not visited yet and set them to visited
-            foreach (var buurman in buurmannen)
-            {
-                if (!visited[buurman])
-                {
-                    q.Enqueue(buurman);
-                    visited[buurman] = true;
-                }
-            }
-        }
-
-        return result;
+        throw new NotImplementedException();
     }
     
     /// <summary>
@@ -67,39 +35,7 @@ public class Graph
     //Depth First Traveral
     public string DFT(int root)
     {
-        // create empty queue and enqueue the root
-        var stack = new Stack<int>();
-        stack.Push(root);
-
-        // create array of booleans to keep track of visited nodes and set the root flag to true
-        var visited = new bool[Count];
-        visited[root] = true;
-        var result = string.Empty;
-
-        // Loop until queue is empty
-        while (stack.Count > 0)
-        {
-            // dequeue a node
-            var node = stack.Pop();
-
-            // add the current node (followed by a space) to the string
-            result += $"{node} ";
-
-            // find neighbors of current
-            var buurmannen = NeighborsReversed(node);
-
-            // enqueue all neighbors which are not visited yet and set them to visited
-            foreach (var buurman in buurmannen)
-            {
-                if (!visited[buurman])
-                {
-                    stack.Push(buurman);
-                    visited[buurman] = true;
-                }
-            }
-        }
-
-        return result;
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -116,65 +52,7 @@ public class Graph
     //Dijkstra's algorithm SingleSourceShortestPath 
     public Tuple<double[], int[]> SingleSourceShortestPath(int source)
     {
-        // Step 1: Initialize
-        var distanceToSource = new double[Count];
-        var previousNodes = new int[Count];
-        var unvisitedNodes = new HashSet<int>();
-        
-        // Set all distances to infinity, predecessors to -1, add all to unvisited
-        for (int i = 0; i < Count; i++)
-        {
-            distanceToSource[i] = double.PositiveInfinity;
-            previousNodes[i] = -1;
-            unvisitedNodes.Add(i);
-        }
-        
-        // Source starts at distance 0
-        distanceToSource[source] = 0;
-        
-        // Step 2: Process all unvisited nodes
-        while (unvisitedNodes.Count > 0)
-        {
-            // Find the unvisited node closest to source
-            int closestNode = -1;
-            double closestDistance = double.PositiveInfinity;
-            
-            foreach (int unvisited in unvisitedNodes)
-            {
-                if (distanceToSource[unvisited] < closestDistance)
-                {
-                    closestDistance = distanceToSource[unvisited];
-                    closestNode = unvisited;
-                }
-            }
-            
-            // If no reachable (unvisited) nodes can be found, stop
-            if (closestNode == -1)
-                break;
-            
-            // Mark as visited
-            unvisitedNodes.Remove(closestNode);
-            
-            // Step 3: Update distances to all neighbors of closest
-            var neighbors = Neighbors(closestNode);
-            foreach (int neighbor in neighbors)
-            {
-                if (unvisitedNodes.Contains(neighbor))
-                {
-                    // Distance through closest node
-                    double newDistance = distanceToSource[closestNode] + AdjacencyMatrix[closestNode, neighbor];
-                    
-                    // If shorter path found, update distance and predecessor
-                    if (newDistance < distanceToSource[neighbor])
-                    {
-                        distanceToSource[neighbor] = newDistance;
-                        previousNodes[neighbor] = closestNode;
-                    }
-                }
-            }
-        }
-        
-        return new Tuple<double[], int[]>(distanceToSource, previousNodes);
+        throw new NotImplementedException();
     }
     
     // UTILITY METHODS
