@@ -5,7 +5,7 @@ public class Queue<T> : IQueue<T>
     private int _front;
     private int _back;
     private T?[] _data;
-    private int _count = 0;
+    private int _count;
 
     public bool Empty => throw new NotImplementedException();
     public bool Full => throw new NotImplementedException();

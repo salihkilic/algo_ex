@@ -37,6 +37,38 @@ TestRunner.RunTest("AddLast: Add to Empty and Non-Empty", () =>
     Assertions.AssertEqual(list.Head?.Next?.Value, 20);
 }, "Hint: AddLast traverses to the end and appends a new node. If empty, it becomes Head.");
 
+TestRunner.RunTest("Count: Matches Node Count", () =>
+{
+    var list = new SinglyLinkedList<int>();
+    
+    // Test count on empty list
+    Assertions.AssertEqual(list.Count, 0);
+    
+    // Add nodes and verify count matches
+    list.AddLast(1);
+    Assertions.AssertEqual(list.Count, 1);
+    
+    list.AddLast(2);
+    Assertions.AssertEqual(list.Count, 2);
+    
+    list.AddLast(3);
+    Assertions.AssertEqual(list.Count, 3);
+    
+    list.AddFirst(0);
+    Assertions.AssertEqual(list.Count, 4);
+    
+    // Manually verify by traversing and counting nodes
+    int nodeCount = 0;
+    var current = list.Head;
+    while (current != null)
+    {
+        nodeCount++;
+        current = current.Next;
+    }
+    
+    Assertions.AssertEqual(list.Count, nodeCount);
+}, "Hint: Count should accurately reflect the number of nodes in the list. Verify by manual traversal.");
+
 
 // --- Enumeration Tests ---
 Console.WriteLine("\nTesting Enumeration...");
@@ -209,9 +241,41 @@ TestRunner.RunTest("Clear: Reset List", () =>
     
     list.Clear();
     
-    Assertions.AssertEqual(list.Count, 0); // Note: Current implementation might fail this if Count isn't reset
+    Assertions.AssertEqual(list.Count, 0);
     Assertions.AssertEqual(list.Head == null, true);
 }, "Hint: Set Head to null. Don't forget to reset Count to 0!");
+
+TestRunner.RunTest("Clear: Reuse After Clear", () =>
+{
+    var list = new SinglyLinkedList<int>();
+    list.AddLast(1);
+    list.AddLast(2);
+    list.AddLast(3);
+    
+    // Clear the list
+    list.Clear();
+    Assertions.AssertEqual(list.Count, 0);
+    Assertions.AssertEqual(list.Head == null, true);
+    
+    // Add new elements after clearing
+    list.AddLast(10);
+    list.AddLast(20);
+    
+    Assertions.AssertEqual(list.Count, 2);
+    Assertions.AssertEqual(list.Head?.Value, 10);
+    Assertions.AssertEqual(list.Head?.Next?.Value, 20);
+}, "Hint: After clearing, the list should be fully usable again.");
+
+TestRunner.RunTest("Clear: Empty List", () =>
+{
+    var list = new SinglyLinkedList<int>();
+    
+    // Should not fail on empty list
+    list.Clear();
+    
+    Assertions.AssertEqual(list.Count, 0);
+    Assertions.AssertEqual(list.Head == null, true);
+}, "Hint: Clearing an already empty list should not throw an error.");
 
 Console.WriteLine();
 Console.WriteLine("Done.");

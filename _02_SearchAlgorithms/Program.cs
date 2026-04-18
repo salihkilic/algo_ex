@@ -83,6 +83,62 @@ TestRunner.RunTest("Binary Search (Recursive): Works with Strings", () =>
     Assertions.AssertEqual(result, expected);
 });
 
+// Binary Search Iterative Tests
+TestRunner.RunTest("Binary Search (Iterative): Element present (Middle)", () =>
+{
+    int[] sortedArr = { 10, 20, 30, 50, 70, 80 };
+    int target = 50; // Index 3
+    int expected = 3;
+    
+    int result = SearchAlgo<int>.BinarySearch(sortedArr, target);
+    
+    Assertions.AssertEqual(result, expected);
+});
+
+TestRunner.RunTest("Binary Search (Iterative): Element present (Low end)", () =>
+{
+    int[] sortedArr = { 10, 20, 30, 50, 70, 80 };
+    int target = 10; // Index 0
+    int expected = 0;
+    
+    int result = SearchAlgo<int>.BinarySearch(sortedArr, target);
+    
+    Assertions.AssertEqual(result, expected);
+});
+
+TestRunner.RunTest("Binary Search (Iterative): Element present (High end)", () =>
+{
+    int[] sortedArr = { 10, 20, 30, 50, 70, 80 };
+    int target = 80; // Index 5
+    int expected = 5;
+    
+    int result = SearchAlgo<int>.BinarySearch(sortedArr, target);
+    
+    Assertions.AssertEqual(result, expected);
+});
+
+TestRunner.RunTest("Binary Search (Iterative): Element not present", () =>
+{
+    int[] sortedArr = { 10, 20, 30, 50, 70, 80 };
+    int target = 25;
+    int expected = -1;
+    
+    int result = SearchAlgo<int>.BinarySearch(sortedArr, target);
+    
+    Assertions.AssertEqual(result, expected);
+});
+
+TestRunner.RunTest("Binary Search (Iterative): Works with Strings", () =>
+{
+    string[] sortedArr = { "apple", "banana", "cherry", "date", "elderberry" };
+    string target = "cherry";
+    int expected = 2;
+    
+    int result = SearchAlgo<string>.BinarySearch(sortedArr, target);
+    
+    Assertions.AssertEqual(result, expected);
+});
+
 Console.WriteLine();
 Console.WriteLine("Done.");
 

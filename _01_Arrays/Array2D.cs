@@ -11,7 +11,7 @@ public class Array2D
     // Input: {{1, 2}, {3, 4}}
     // Output: {3, 7}
     public static T[]? RowSum<T>(T[,] arr2D) where T : INumber<T>
-    {   
+    {
         throw new NotImplementedException();
     }
     

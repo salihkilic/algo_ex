@@ -46,7 +46,7 @@ public class ArrayJagged
     // - Row 1: All Item2 values.
     // - Row 2: All Item3 values.
     public static T[][]? Split<T>(Tuple<T, T, T>[] input)
-    {        
+    {
         throw new NotImplementedException();
     }
 
@@ -55,7 +55,7 @@ public class ArrayJagged
     // - Column 0 should contain elements from array 'a'.
     // - Column 1 should contain elements from array 'b'.
     // If one array is shorter than the other, fill the missing spots with default(T) (e.g. 0).
-    public static T[,]? Zip<T>(T[] a, T[] b)
+    public static T?[,]? Zip<T>(T[] a, T[] b)
     {        
         throw new NotImplementedException();
     }

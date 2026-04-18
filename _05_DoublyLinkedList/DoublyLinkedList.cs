@@ -87,9 +87,7 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     {
         throw new NotImplementedException();
     }
-
-    // TODO: Implement the enumerator to allow iterating over the list.
-    // Use 'yield return' to return values from First to Last.
+    
     public IEnumerator<T> GetEnumerator()
     {
         DoubleNode<T>? current = First;

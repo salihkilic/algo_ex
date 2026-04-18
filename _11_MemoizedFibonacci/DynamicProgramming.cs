@@ -15,7 +15,9 @@ public static class DynamicProgramming {
     public static long FibonacciDynamic(long n, long[] storedResults)
     {    
         Utils.ShowCallStack(false); //DO NOT comment this line of code
+        
+        // Write your code under this comment, not above. That ShowCallstack thing is weird.
+        
         throw new NotImplementedException();
-        //ToDo: remove the above exception and provide recursive implementation of fibonacciDynamic 
     }
 }

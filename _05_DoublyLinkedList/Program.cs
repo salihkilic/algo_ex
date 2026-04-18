@@ -129,11 +129,65 @@ TestRunner.RunTest("Delete: Node Reference (Tail)", () =>
 // --- Search/Contains Tests ---
 Console.WriteLine("\nTesting Search & Contains...");
 
+TestRunner.RunTest("Search: Find Existing Node", () =>
+{
+    // Manually construct: 10 <-> 20 <-> 30
+    var node10 = new DoubleNode<int>(10);
+    var node20 = new DoubleNode<int>(20);
+    var node30 = new DoubleNode<int>(30);
+    
+    node10.Next = node20;
+    node20.Previous = node10;
+    node20.Next = node30;
+    node30.Previous = node20;
+    
+    var list = new DoublyLinkedList<int>();
+    list.First = node10;
+    list.Last = node30;
+    
+    var found = list.Search(20);
+    Assertions.AssertEqual(found != null, true);
+    Assertions.AssertEqual(found?.Value, 20);
+    Assertions.AssertEqual(found?.Previous?.Value, 10);
+    Assertions.AssertEqual(found?.Next?.Value, 30);
+});
+
+TestRunner.RunTest("Search: Non-Existent Value Returns Null", () =>
+{
+    // Manually construct: 10 <-> 20
+    var node10 = new DoubleNode<int>(10);
+    var node20 = new DoubleNode<int>(20);
+    
+    node10.Next = node20;
+    node20.Previous = node10;
+    
+    var list = new DoublyLinkedList<int>();
+    list.First = node10;
+    list.Last = node20;
+    
+    var notFound = list.Search(99);
+    Assertions.AssertEqual(notFound == null, true);
+});
+
+TestRunner.RunTest("Search: Empty List Returns Null", () =>
+{
+    var list = new DoublyLinkedList<int>();
+    var result = list.Search(10);
+    Assertions.AssertEqual(result == null, true);
+});
+
 TestRunner.RunTest("Contains: Basic", () =>
 {
+    // Manually construct: "A" <-> "B"
+    var nodeA = new DoubleNode<string>("A");
+    var nodeB = new DoubleNode<string>("B");
+    
+    nodeA.Next = nodeB;
+    nodeB.Previous = nodeA;
+    
     var list = new DoublyLinkedList<string>();
-    list.AddLast("A");
-    list.AddLast("B");
+    list.First = nodeA;
+    list.Last = nodeB;
     
     Assertions.AssertEqual(list.Contains("B"), true);
     Assertions.AssertEqual(list.Contains("Z"), false);

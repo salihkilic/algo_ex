@@ -7,13 +7,11 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
     public void Insert(T value) => Insert(value, Root);
     public void InsertIterative(T value)
     {
-        // handle null
         throw new NotImplementedException();
     }
 
     private void Insert(T value, TreeNode<T>? node)
     {
-        // handle null
         throw new NotImplementedException();
     }
 
@@ -43,15 +41,7 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
 
     private TreeNode<T>? Search(TreeNode<T>? node, T value)
     {
-        // node does not exist
-        
-        // value in the node is the same we are looking for
-
-        // value in the node is smaller than the one we are looking for
- 
-        // value in the node is bigger than the one we are looking for
         throw new NotImplementedException();
-
     }
 
     #region  Remove Delete
@@ -59,35 +49,12 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
     public bool Remove(T value) => throw new NotImplementedException();
 
     private bool DeleteValue(Bst<T>? tree, T value)
-    { 
-        // special case if the value to delete is in the root (and the root has 0 children or 1 child)
-        
-        // there are no children:
-
-        // there is only left child, the right does not exist
-            
-        // there is only right child, the left does not exist
-
-
-        // all other cases. Find first the node corresponding to the value we want to delete
-
-        // actually perform the deletion
+    {
         throw new NotImplementedException();
     }
 
     private bool Delete(TreeNode<T> nodeToDelete)
     {
-        // CASE 1 : LEAF
-
-        // CASE 2 : ONE CHILD
-
-        // CASE 3 : TWO CHILDREN
-
-        // find inordersucc == smallest element of right subtree
-
-        // copy value to nodeToDelete
-
-        // call recursively delete on inordersucc 
         throw new NotImplementedException();
     }
 

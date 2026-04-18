@@ -19,7 +19,6 @@ public class FloydWarshall
     /// </returns>
     public static Tuple<double[,], int[,]> Init(double[,] graph)
     {
-        //ToDo 1.1 Initialize the distance and next matrix
         throw new NotImplementedException();
     }
     
@@ -34,9 +33,6 @@ public class FloydWarshall
     /// </returns>
     public static Tuple<double[,], int[,]> AllPairShortestPath(double[,] graph)
     {
-        //ToDo 1: Floyd-Warshall Algorithm, All Pairs Shortest Path
         throw new NotImplementedException();
-        //Includes 1.1
-        var (dist, next) = Init(graph);
     }
 }

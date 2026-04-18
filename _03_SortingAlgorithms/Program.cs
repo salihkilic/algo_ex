@@ -91,7 +91,32 @@ TestRunner.RunTest("Merge Sort: Large Range", () =>
     Assertions.AssertSorted(arr, expected);
 }, "Hint: Just checking if it handles negatives and zeros correctly.");
 
+TestRunner.RunTest("Merge Sort: Left Heavy Remainder", () =>
+{
+    // This will leave many elements on the left side after main merge
+    int[] arr = [1, 3, 5, 7, 9, 2];
+    int[] expected = [1, 2, 3, 5, 7, 9];
+    SortAlgo<int>.MergeSort(arr, 0, arr.Length - 1);
+    Assertions.AssertSorted(arr, expected);
+}, "Hint: Tests copying remaining left elements. Will fail if you dont increment resultIndex.");
+
+TestRunner.RunTest("Merge Sort: Right Heavy Remainder", () =>
+{
+    // This will leave many elements on the right side after main merge
+    int[] arr = [10, 2, 4, 6, 8, 1];
+    int[] expected = [1, 2, 4, 6, 8, 10];
+    SortAlgo<int>.MergeSort(arr, 0, arr.Length - 1);
+    Assertions.AssertSorted(arr, expected);
+}, "Hint: Tests copying remaining right elements. Will fail if you dont increment resultIndex.");
+
+TestRunner.RunTest("Merge Sort: Multiple Remainders on Both Sides", () =>
+{
+    // Carefully crafted to leave remainders on both sides
+    int[] arr = [1, 5, 9, 2, 3, 7];
+    int[] expected = [1, 2, 3, 5, 7, 9];
+    SortAlgo<int>.MergeSort(arr, 0, arr.Length - 1);
+    Assertions.AssertSorted(arr, expected);
+}, "Hint: Complex test with multiple splits and remainders.");
 
 Console.WriteLine();
 Console.WriteLine("Done.");
-

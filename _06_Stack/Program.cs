@@ -77,6 +77,62 @@ TestRunner.RunTest("Push: Auto-Resizing", () =>
     
 }, "Hint: If stack is Full, create a new larger array and copy elements before pushing.");
 
+TestRunner.RunTest("Push: Multiple Resizes", () =>
+{
+    var stack = new _06_Stack.Stack<int>(2);
+    
+    // Push 10 items, forcing multiple resizes
+    for (int i = 1; i <= 10; i++)
+    {
+        stack.Push(i);
+    }
+    
+    Assertions.AssertEqual(stack.Count, 10);
+    Assertions.AssertEqual(stack.Peek(), 10);
+    Assertions.AssertEqual(stack.Size >= 10, true);
+}, "Hint: Stack should handle multiple consecutive resizes correctly.");
+
+TestRunner.RunTest("Push/Pop: Consistency After Resize", () =>
+{
+    var stack = new _06_Stack.Stack<int>(2);
+    
+    // Push beyond capacity to trigger resize
+    stack.Push(10);
+    stack.Push(20);
+    stack.Push(30);
+    stack.Push(40);
+    
+    // Pop all and verify LIFO order is preserved
+    Assertions.AssertEqual(stack.Pop(), 40);
+    Assertions.AssertEqual(stack.Pop(), 30);
+    Assertions.AssertEqual(stack.Pop(), 20);
+    Assertions.AssertEqual(stack.Pop(), 10);
+    Assertions.AssertEqual(stack.Empty, true);
+}, "Hint: LIFO order must be maintained even after resize.");
+
+TestRunner.RunTest("Push: Verify All Data Preserved After Resize", () =>
+{
+    var stack = new _06_Stack.Stack<int>(3);
+    
+    // Fill to capacity
+    stack.Push(100);
+    stack.Push(200);
+    stack.Push(300);
+    
+    // Verify full
+    Assertions.AssertEqual(stack.Full, true);
+    
+    // Push new item (triggers resize)
+    stack.Push(400);
+    
+    // Verify all previous items are still accessible by popping in reverse order
+    Assertions.AssertEqual(stack.Pop(), 400);
+    Assertions.AssertEqual(stack.Pop(), 300);
+    Assertions.AssertEqual(stack.Pop(), 200);
+    Assertions.AssertEqual(stack.Pop(), 100);
+    Assertions.AssertEqual(stack.Count, 0);
+}, "Hint: Array copying during resize must preserve all existing elements correctly.");
+
 // --- Edge Case Tests ---
 Console.WriteLine("\nTesting Edge Cases...");
 

@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 
 public class HashTable<K, V> : IHashTable<K, V>
 {
-    Entry<K, V>[]? Buckets { get; set;}
+    Entry<K, V>?[]? Buckets { get; set;}
 
-    public ReadOnlyCollection<Entry<K, V>>? Data => Buckets == null? null : Buckets.AsReadOnly();
+    public ReadOnlyCollection<Entry<K, V>?>? Data => Buckets?.AsReadOnly();
 
     public HashTable() { Buckets = null; }
 
@@ -20,6 +20,7 @@ public class HashTable<K, V> : IHashTable<K, V>
     protected int GetIndex(K key)
     {
         int hashCode = Math.Abs(key.GetHashCode());
+        
         throw new NotImplementedException();
     }
 

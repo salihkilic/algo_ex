@@ -5,13 +5,9 @@ namespace _04_LinkedList;
 public class SinglyLinkedList<T> : ILinkedList<T> where T : IComparable<T>
 {
     public SingleNode<T>? Head;
-    private int count;
+    private int _count;
 
-    public SinglyLinkedList()
-    {
-    }
-
-    public int Count => count;
+    public int Count => _count;
 
     public void AddFirst(T value)
     {
