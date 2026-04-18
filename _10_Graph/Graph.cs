@@ -23,21 +23,38 @@ public class Graph
     public string Bft(int root)
     {
         // create empty queue and enqueue the root
+        var q = new Queue<int>();
+        q.Enqueue(root);
 
         // create array of booleans to keep track of visited nodes and set the root flag to true
+        var visited = new bool[Count];
+        visited[root] = true;
+        var result = string.Empty;
 
         // Loop until queue is empty
-        
-        // dequeue a node
-            
+        while (q.Count > 0)
+        {
+            // dequeue a node
+            var node = q.Dequeue();
 
-        // add the current node (followed by a space) to the string
-            
+            // add the current node (followed by a space) to the string
+            result += $"{node} ";
 
-        // find neighbors of current
+            // find neighbors of current
+            var buurmannen = Neighbors(node);
 
-        // enqueue all neighbors which are not visited yet and set them to visited
-        throw new NotImplementedException();
+            // enqueue all neighbors which are not visited yet and set them to visited
+            foreach (var buurman in buurmannen)
+            {
+                if (!visited[buurman])
+                {
+                    q.Enqueue(buurman);
+                    visited[buurman] = true;
+                }
+            }
+        }
+
+        return result;
     }
     
     /// <summary>
@@ -50,22 +67,39 @@ public class Graph
     //Depth First Traveral
     public string DFT(int root)
     {
-        // create empty stack and push the root into it
+        // create empty queue and enqueue the root
+        var stack = new Stack<int>();
+        stack.Push(root);
 
-        // create array of booleans to keep track of visited nodes
+        // create array of booleans to keep track of visited nodes and set the root flag to true
+        var visited = new bool[Count];
+        visited[root] = true;
+        var result = string.Empty;
 
-        // Loop until stack is empty
-        
-        // pop a node from the stack 
-      
-        // check if current node is not visited yet
-        // add current node to the string (followed by a space) and set it to visited
+        // Loop until queue is empty
+        while (stack.Count > 0)
+        {
+            // dequeue a node
+            var node = stack.Pop();
 
-        // find neighbors (in reversed order) of current  
-            
-        // push all neighbors 
+            // add the current node (followed by a space) to the string
+            result += $"{node} ";
 
-        throw new NotImplementedException();
+            // find neighbors of current
+            var buurmannen = NeighborsReversed(node);
+
+            // enqueue all neighbors which are not visited yet and set them to visited
+            foreach (var buurman in buurmannen)
+            {
+                if (!visited[buurman])
+                {
+                    stack.Push(buurman);
+                    visited[buurman] = true;
+                }
+            }
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -82,23 +116,65 @@ public class Graph
     //Dijkstra's algorithm SingleSourceShortestPath 
     public Tuple<double[], int[]> SingleSourceShortestPath(int source)
     {
-        // initialization of distance, prev and unvisitedNodes
-        // default distance: double.PositiveInfinity
-        // default previous node: -1
-
-        // set distance of source
+        // Step 1: Initialize
+        var distanceToSource = new double[Count];
+        var previousNodes = new int[Count];
+        var unvisitedNodes = new HashSet<int>();
         
-        // Loop until unvisitedNodes is empty
-  
-        // find closest node in unvisitedNodes
-       
-        // remove the closest node from unvisitedNodes
-
-        //considering all neighbors of the closest node
-
-        // calculate distance and update distance (and previous node) if smaller
-
-        throw new NotImplementedException();
+        // Set all distances to infinity, predecessors to -1, add all to unvisited
+        for (int i = 0; i < Count; i++)
+        {
+            distanceToSource[i] = double.PositiveInfinity;
+            previousNodes[i] = -1;
+            unvisitedNodes.Add(i);
+        }
+        
+        // Source starts at distance 0
+        distanceToSource[source] = 0;
+        
+        // Step 2: Process all unvisited nodes
+        while (unvisitedNodes.Count > 0)
+        {
+            // Find the unvisited node closest to source
+            int closestNode = -1;
+            double closestDistance = double.PositiveInfinity;
+            
+            foreach (int unvisited in unvisitedNodes)
+            {
+                if (distanceToSource[unvisited] < closestDistance)
+                {
+                    closestDistance = distanceToSource[unvisited];
+                    closestNode = unvisited;
+                }
+            }
+            
+            // If no reachable (unvisited) nodes can be found, stop
+            if (closestNode == -1)
+                break;
+            
+            // Mark as visited
+            unvisitedNodes.Remove(closestNode);
+            
+            // Step 3: Update distances to all neighbors of closest
+            var neighbors = Neighbors(closestNode);
+            foreach (int neighbor in neighbors)
+            {
+                if (unvisitedNodes.Contains(neighbor))
+                {
+                    // Distance through closest node
+                    double newDistance = distanceToSource[closestNode] + AdjacencyMatrix[closestNode, neighbor];
+                    
+                    // If shorter path found, update distance and predecessor
+                    if (newDistance < distanceToSource[neighbor])
+                    {
+                        distanceToSource[neighbor] = newDistance;
+                        previousNodes[neighbor] = closestNode;
+                    }
+                }
+            }
+        }
+        
+        return new Tuple<double[], int[]>(distanceToSource, previousNodes);
     }
     
     // UTILITY METHODS
