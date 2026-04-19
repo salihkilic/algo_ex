@@ -5,6 +5,11 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
     public TreeNode<T>? Root { get; set; }
 
     public void Insert(T value) => Insert(value, Root);
+    
+    // TIPS: 
+    // - 
+    
+    
     public void InsertIterative(T value)
     {
         throw new NotImplementedException();
@@ -17,6 +22,10 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
 
     #region Traversal
 
+    // TIP:
+    // - Zit alles voor, na of om root heen?
+    // - We slaan de string op als we op root zitten, de rest traversen we
+    
     public string PreOrderTraversal() => PreOrderTraversal(Root);
     
     private string PreOrderTraversal(TreeNode<T>? currNode)
@@ -55,6 +64,11 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
 
     private bool Delete(TreeNode<T> nodeToDelete)
     {
+        // Basically twee cases:
+        //   - We hebben 0/1 children, makkelijk, gewoon verwijderen
+        //   - We hebben 2 children, we vervangen de value van ToDelete met de InOrderSuccessor (1 keer rechts, rest links).
+        //   - Daarna verwijder je de successor met een recursieve call
+        
         throw new NotImplementedException();
     }
 

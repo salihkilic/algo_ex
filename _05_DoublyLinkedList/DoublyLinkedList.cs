@@ -17,6 +17,13 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
         _count = 0;
     }
     
+    // TIPS:
+    // - Check head
+    // - Als we head verwijderen of toevoegen, property aanpassen.
+    // - Zelfde geldt voor last hier!
+    // - ALTIJD COUNT BIJWERKEN
+    
+    
     // TODO: Check if the list contains a specific value.
     // Return true if found, false otherwise.
     public bool Contains(T value)

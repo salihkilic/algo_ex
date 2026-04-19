@@ -17,9 +17,16 @@ public class HashTable<K, V> : IHashTable<K, V>
         Buckets = new Entry<K, V>[capacity];
     }
 
+    // TIPS:
+    // - We hoeven alleen maar de kans te vergroten dat we iets vinden / een lege plek hebben voor data
+    // - De hash geeft dus een *startpunt* om te zoeken, in het ergste geval checken we alsnog alle indexes
+    // - Als een value (dus key) al bestaat, hoeven we die niet toe te voegen
+    
     protected int GetIndex(K key)
     {
         int hashCode = Math.Abs(key.GetHashCode());
+        
+        // TIP Hoe krijg je een index die geclamped is op de array lengte?
         
         throw new NotImplementedException();
     }

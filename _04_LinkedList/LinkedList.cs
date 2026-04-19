@@ -9,6 +9,11 @@ public class SinglyLinkedList<T> : ILinkedList<T> where T : IComparable<T>
 
     public int Count => _count;
 
+    // TIPS:
+    // - Check head
+    // - Als we head verwijderen of toevoegen, property aanpassen.
+    // - ALTIJD COUNT BIJWERKEN
+    
     public void AddFirst(T value)
     {
         throw new NotImplementedException();

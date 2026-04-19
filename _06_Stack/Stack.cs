@@ -15,6 +15,9 @@ public class Stack<T> : IStack<T>
     // TODO: Return the current capacity (total size) of the internal array.
     public int Size => throw new NotImplementedException();
     
+    // TIP:
+    // - Hou een index bij van de bovenste item en werk die bij met elke mutatie
+    // - Deze is -1 bij een lege stack
 
     // TODO: Initialize the stack with a specified initial size.
     public Stack(int size = 4)

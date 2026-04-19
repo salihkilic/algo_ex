@@ -12,6 +12,11 @@ public class Queue<T> : IQueue<T>
     public int Count => throw new NotImplementedException();
     public int Size => throw new NotImplementedException();
 
+    // TIPS:
+    // - Hou een front en back index bij
+    // - Modulo je weg naar een index voor wrap-around
+    
+    
     public Queue(int capacity = 5)
     {
         throw new NotImplementedException();

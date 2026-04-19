@@ -22,6 +22,8 @@ public class Graph
     //Breadth First Traversal
     public string Bft(int root)
     {
+        // TIPS:
+        // - BFT: Volgende node komt van queue, met buurmannen in normale volgorde
         throw new NotImplementedException();
     }
     
@@ -35,6 +37,8 @@ public class Graph
     //Depth First Traveral
     public string DFT(int root)
     {
+        // TIPS:
+        // - BFT: Volgende node komt van stack, met buurmannen in omgekeerde volgorde
         throw new NotImplementedException();
     }
 
@@ -52,6 +56,26 @@ public class Graph
     //Dijkstra's algorithm SingleSourceShortestPath 
     public Tuple<double[], int[]> SingleSourceShortestPath(int source)
     {
+        // Step 1: Initialize
+        // - distanceToSource: double[] met alle afstanden tot start voor elke index
+        // - previousNodes: int[] met elk een voorgaande nodes met de kortste route tot dan, voor die index
+        // - unvisitedNodes: HashSet<int> met alle onbezochte nodes (nodes waarvan we nog niet alle uitgaande paden berekend hebben)
+        // Met een for loop zetten we alle distances op infinity, previousnodes op -1 en voegen we alle nodes aan unvisited toe.
+        // Zet de distance to source voor de source node op 0.
+        
+        // Step 2: De while loop
+        // - Zo lang we nog unvisited nodes hebben pakken we degene die het meest dichtbij source is (voor nu)
+        // - Als we er geen vinden, zijn we klaar
+        // - Markeer deze nieuwe node als "bezocht"
+        
+        // Stap 3: Bezoeken (binnen de while nog)
+        // - Pak alle neighbours van de huidige node
+        // - Loop over de neighbours en kijk of we al bezocht hebben (dan hoeven we er niks mee)
+        // - Als de neighbour via jou sneller bereikbaar is dan de distance (en predecessor) die er al was (potentieel infinity), dan updaten we distance en predecessor met ONZE shit (de huidige node)
+        //      - distanceArr[neighbour] = onze distance + distance tussen ons en neighbour
+        //      - previousNode[neighbour] = onze index
+        
+        
         throw new NotImplementedException();
     }
     
