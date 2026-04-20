@@ -53,6 +53,9 @@ public static class Program
 
         TestRunner.RunTest("Delete Multiple Collisions", TestDeleteMultipleCollisions,
             "Deleting from collision chain should preserve other items.");
+
+        TestRunner.RunTest("Duplicate Key Via Collision", TestDuplicateKeyViaCollision,
+            "Adding the same key twice, where second time goes through linear probing, should return false.");
     }
 
     /// <summary>
@@ -288,5 +291,38 @@ public static class Program
         // Both remaining items should still be findable
         Assertions.AssertEqual(hashTable.Find(0), "Base", "Base should still be found.");
         Assertions.AssertEqual(hashTable.Find(10), "Collided2", "Collided2 should be found after deleting Collided1.");
+    }
+
+    /// <summary>
+    /// Tests that duplicate keys are detected even when found during linear probing.
+    /// Scenario: Add key A at index 0. Add key B that collides at index 0, probes to index 1.
+    /// Try to add key A again - it should be detected as duplicate even though it's found during probing.
+    /// </summary>
+    private static void TestDuplicateKeyViaCollision()
+    {
+        var hashTable = new HashTable<int, string>(5);
+        
+        // Add key 0 -> maps to index 0
+        hashTable.Add(0, "First");
+        Assertions.AssertEqual(hashTable.Find(0), "First", "Should find first item.");
+        
+        // Add key 5 -> maps to index 0 (collision), probes to index 1
+        hashTable.Add(5, "Collided");
+        Assertions.AssertEqual(hashTable.Find(5), "Collided", "Should find collided item.");
+        
+        // Try to add key 0 again - should return false (duplicate)
+        // This should detect the duplicate even though it has to search through probing
+        bool addedAgain = hashTable.Add(0, "Second");
+        Assertions.AssertEqual(addedAgain, false, "Should return false when adding duplicate key that exists at primary index.");
+        
+        // Value should not have been updated
+        Assertions.AssertEqual(hashTable.Find(0), "First", "Value should remain unchanged.");
+        
+        // Try to add key 5 again - should also return false
+        addedAgain = hashTable.Add(5, "NewCollided");
+        Assertions.AssertEqual(addedAgain, false, "Should return false when adding duplicate key that was placed via probing.");
+        
+        // Value should not have been updated
+        Assertions.AssertEqual(hashTable.Find(5), "Collided", "Collided value should remain unchanged.");
     }
 }

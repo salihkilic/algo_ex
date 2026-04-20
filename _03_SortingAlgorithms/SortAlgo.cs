@@ -6,44 +6,77 @@ public class SortAlgo<T> where T : IComparable<T>
     {
         // Also known as swapsort!
         // As long as we swapped the last while, we iterate the array and swap values next to each other when they're in the wrong order.
-        
-        throw new NotImplementedException();
+
+        var swapped = true;
+
+        while (swapped)
+        {
+            swapped = false;
+
+            for (int i = 1; i < data.Length; i++)
+            {
+                if (data[i - 1].CompareTo(data[i]) == 1)
+                {
+                    swapped = true;
+                    (data[i], data[i - 1]) = (data[i - 1], data[i]);
+                }
+            }
+        }
     }
 
     public static void InsertionSort(T[] data)
     {
-        // iterate
-        // Grab your temporary value
-        // while previousIndex value is higher, move back 1 each iteration, moving those values up one index
-        // that last previousindex + 1 (because you found a lower value at previousIndex) is your location for the temp val 
-        
-        throw new NotImplementedException();
+        for (int i = 1; i < data.Length; i++)
+        {
+            var temp = data[i];
+            var previousIndex = i - 1;
+
+            while (previousIndex >= 0 && data[previousIndex].CompareTo(temp) == 1)
+            {
+                data[previousIndex + 1] = data[previousIndex];
+                previousIndex--;
+            }
+
+            data[previousIndex + 1] = temp;
+        }
     }
 
     public static void MergeSort(T[] array, int low, int high)
     {
-        // Als low < high
-        // bereken mid
-        // MergeSort links
-        // MergeSort rechts
-        // Merge alles
-        throw new NotImplementedException();
+        if (low < high)
+        {
+            var mid = (low + high) / 2;
+            
+            MergeSort(array, low, mid);
+            MergeSort(array, mid + 1, high);
+            Merge(array, low, mid, high);
+        }
     }
 
     public static void Merge(T[] array, int low, int mid, int high)
     {
-        // maak een result array van de correcte lengte voor deze selectie
-        // zet een index voor de resultArray
-        // bereken de 0-indexes van beide sub-arrays
+        var results = new T[high - low + 1];
+        var resultIndex = 0;
+        var leftIndex = low;
+        var rightIndex = mid + 1;
+
+        while (leftIndex <= mid && rightIndex <= high)
+        {
+            if (array[leftIndex].CompareTo(array[rightIndex]) == -1)
+                results[resultIndex++] = array[leftIndex++];
+            else
+                results[resultIndex++] = array[rightIndex++];
+        }
         
-        // while <= mid && rechts <= high
-            // voeg de kleinste van links/rechts aan resultArray
-            
-        // Hebben we nog items over links?
+        while (leftIndex <= mid)
+            results[resultIndex++] = array[leftIndex++];
         
-        // Hebben nog items over rechts?
-        
-        // Overschrijf de waardes van de result aan `array` op de juiste plek (er is een offset)
-        throw new NotImplementedException();
+        while (rightIndex <= high)
+            results[resultIndex++] = array[rightIndex++];
+
+        for (int i = 0; i < results.Length; i++)
+        {
+            array[low + i] = results[i];
+        }
     }
 }

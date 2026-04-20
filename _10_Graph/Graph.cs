@@ -22,8 +22,6 @@ public class Graph
     //Breadth First Traversal
     public string Bft(int root)
     {
-        // TIPS:
-        // - BFT: Volgende node komt van queue, met buurmannen in normale volgorde
         throw new NotImplementedException();
     }
     
@@ -37,8 +35,6 @@ public class Graph
     //Depth First Traveral
     public string DFT(int root)
     {
-        // TIPS:
-        // - BFT: Volgende node komt van stack, met buurmannen in omgekeerde volgorde
         throw new NotImplementedException();
     }
 
@@ -57,26 +53,62 @@ public class Graph
     public Tuple<double[], int[]> SingleSourceShortestPath(int source)
     {
         // Step 1: Initialize
-        // - distanceToSource: double[] met alle afstanden tot start voor elke index
-        // - previousNodes: int[] met elk een voorgaande nodes met de kortste route tot dan, voor die index
-        // - unvisitedNodes: HashSet<int> met alle onbezochte nodes (nodes waarvan we nog niet alle uitgaande paden berekend hebben)
-        // Met een for loop zetten we alle distances op infinity, previousnodes op -1 en voegen we alle nodes aan unvisited toe.
-        // Zet de distance to source voor de source node op 0.
+        var distances = new double[Count];
+        var previousNodes = new int[Count];
+        var visitedNodes = new bool[Count];
         
-        // Step 2: De while loop
-        // - Zo lang we nog unvisited nodes hebben pakken we degene die het meest dichtbij source is (voor nu)
-        // - Als we er geen vinden, zijn we klaar
-        // - Markeer deze nieuwe node als "bezocht"
+        // Set all distances to infinity, predecessors to -1
+        for (int i = 0; i < Count; i++)
+        {
+            distances[i] = double.PositiveInfinity;
+            previousNodes[i] = -1;
+        }
         
-        // Stap 3: Bezoeken (binnen de while nog)
-        // - Pak alle neighbours van de huidige node
-        // - Loop over de neighbours en kijk of we al bezocht hebben (dan hoeven we er niks mee)
-        // - Als de neighbour via jou sneller bereikbaar is dan de distance (en predecessor) die er al was (potentieel infinity), dan updaten we distance en predecessor met ONZE shit (de huidige node)
-        //      - distanceArr[neighbour] = onze distance + distance tussen ons en neighbour
-        //      - previousNode[neighbour] = onze index
+        // Source starts at distance 0
+        distances[source] = 0;
         
+        // Step 2: Process all unvisited nodes
+        while (true)
+        {
+            // Find the unvisited node closest to source
+            int closestNode = -1;
+            double closestDistance = double.PositiveInfinity;
+            
+            for (int i = 0; i < Count; i++)
+            {
+                if (!visitedNodes[i] && distances[i] < closestDistance)
+                {
+                    closestDistance = distances[i];
+                    closestNode = i;
+                }
+            }
+            
+            // If no reachable (unvisited) nodes can be found, stop
+            if (closestNode == -1)
+                break;
+            
+            // Step 3: Update distances to all neighbors of closest
+            visitedNodes[closestNode] = true;
+            var neighbors = Neighbors(closestNode);
+            
+            foreach (int neighbor in neighbors)
+            {
+                if (!visitedNodes[neighbor])
+                {
+                    // Distance through closest node
+                    double newDistance = distances[closestNode] + AdjacencyMatrix[closestNode, neighbor];
+                    
+                    // If shorter path found, update distance and predecessor
+                    if (newDistance < distances[neighbor])
+                    {
+                        distances[neighbor] = newDistance;
+                        previousNodes[neighbor] = closestNode;
+                    }
+                }
+            }
+        }
         
-        throw new NotImplementedException();
+        return new Tuple<double[], int[]>(distances, previousNodes);
     }
     
     // UTILITY METHODS

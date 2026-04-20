@@ -7,28 +7,32 @@ public class Queue<T> : IQueue<T>
     private T?[] _data;
     private int _count;
 
-    public bool Empty => throw new NotImplementedException();
-    public bool Full => throw new NotImplementedException();
-    public int Count => throw new NotImplementedException();
-    public int Size => throw new NotImplementedException();
-
-    // TIPS:
-    // - Hou een front en back index bij
-    // - Modulo je weg naar een index voor wrap-around
+    public bool Empty => Count == 0;
+    public bool Full => Count == _data.Length;
+    public int Count => _count;
+    public int Size => _data.Length;
     
     
     public Queue(int capacity = 5)
     {
-        throw new NotImplementedException();
+        _data = new T[capacity];
     }
 
     public void Enqueue(T element)
     {
-        throw new NotImplementedException();
+        if (Full) return;
+        _data[_back++] = element;
+        _back %= Size;
+        _count++;
     }
 
     public T? Dequeue()
     {
-        throw new NotImplementedException();
+        if (Empty) return default;
+
+        var result = _data[_front++];
+        _front %= Size;
+        _count--;
+        return result;
     }
 }

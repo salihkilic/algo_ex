@@ -28,7 +28,7 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     // Return true if found, false otherwise.
     public bool Contains(T value)
     {
-        throw new NotImplementedException();
+        return Search(value) is not null;
     }
 
     // TODO: Search for a node containing the specified value.
@@ -36,7 +36,21 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     // Return the DoubleNode<T> if found, or null if not found.
     public DoubleNode<T>? Search(T value)
     {
-        throw new NotImplementedException();
+        if (First is null || First.Value.CompareTo(value) == 0) 
+            return First;
+        
+        var current = First;
+        while (current is not null)
+        {
+            if (current.Value.CompareTo(value) == 0)
+            {
+                return current;
+            }
+
+            current = current.Next;
+        }
+
+        return null;
     }
 
     #region "addNode=> first, last, sorted" 
@@ -48,7 +62,17 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     // 4. Increment Count.
     public void AddFirst(T value)
     {
-        throw new NotImplementedException();
+        if (First is null)
+        {
+            First = new DoubleNode<T>(value);
+            Last = First;
+            _count++;
+            return;
+        }
+
+        First = new DoubleNode<T>(value, First);
+        First.Next?.Previous = First;
+        _count++;
     }
 
     // TODO: Add a new element to the end (Tail) of the list.
@@ -58,7 +82,15 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     // 4. Increment Count.
     public void AddLast(T value)
     {
-        throw new NotImplementedException();
+        if (Last is null)
+        {
+            AddFirst(value);
+            return;
+        }
+
+        Last = new DoubleNode<T>(value, previous: Last);
+        Last.Previous?.Next = Last;
+        _count++;
     }
 
     // TODO: Add a new element in sorted order (ascending).
@@ -70,7 +102,31 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     // 6. Increment Count.
     public void AddSorted(T value)
     {
-        throw new NotImplementedException();
+        if (First is null || First.Value.CompareTo(value) >= 0)
+        {
+            AddFirst(value);
+            return;
+        }
+
+        var current = First;
+        while (current is not null)
+        {
+            if (current.Value.CompareTo(value) == -1 && current.Next?.Value.CompareTo(value) == 1)
+            {
+                current.Next = new DoubleNode<T>(value, current.Next, current);
+                current.Next.Next?.Previous = current;
+                _count++;
+                return;
+            }
+            
+            if (current.Next is null)
+            {
+                AddLast(value);
+                return;
+            }
+
+            current = current.Next;
+        }
     }
 
     #endregion
@@ -83,7 +139,10 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     // 5. Return false if not found.
     public bool Remove(T value)
     {
-        throw new NotImplementedException();
+        var nodeToRemove = Search(value);
+        if (nodeToRemove is null) return false;
+        Delete(nodeToRemove);
+        return true;
     }
 
     // TODO: Delete a specific node from the list.
@@ -92,7 +151,24 @@ public class DoublyLinkedList<T> : IDoublyLinkedList<T> where T : IComparable<T>
     // 3. Decrement Count.
     public void Delete(DoubleNode<T> node)
     {
-        throw new NotImplementedException();
+        if (node.Equals(First))
+        {
+            First = First.Next;
+            First?.Previous = null;
+        }
+
+        else if (node.Equals(Last))
+        {
+            Last = Last.Previous;
+            Last.Next = null;
+        }
+        else
+        {
+            node.Previous?.Next = node.Next;
+            node.Next?.Previous = node.Previous;
+        }
+
+        _count--;
     }
     
     public IEnumerator<T> GetEnumerator()

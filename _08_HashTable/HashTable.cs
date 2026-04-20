@@ -16,34 +16,74 @@ public class HashTable<K, V> : IHashTable<K, V>
     {
         Buckets = new Entry<K, V>[capacity];
     }
-
-    // TIPS:
-    // - We hoeven alleen maar de kans te vergroten dat we iets vinden / een lege plek hebben voor data
-    // - De hash geeft dus een *startpunt* om te zoeken, in het ergste geval checken we alsnog alle indexes
-    // - Als een value (dus key) al bestaat, hoeven we die niet toe te voegen
     
     protected int GetIndex(K key)
     {
+        if (Buckets is null || key is null) return -1;
+        
         int hashCode = Math.Abs(key.GetHashCode());
-        
-        // TIP Hoe krijg je een index die geclamped is op de array lengte?
-        
-        throw new NotImplementedException();
+        return hashCode % Buckets.Length;
     }
 
     public bool Add(K key, V value)
     {
-        throw new NotImplementedException();
+        if (Buckets is null) return false;
+
+        for (int i = 0; i < Buckets.Length; i++)
+        {
+            var probingIndex = (GetIndex(key) + i) % Buckets.Length;
+            
+            // Found a bucket
+            if (Buckets[probingIndex] is null)
+            {
+                Buckets[probingIndex] = new Entry<K, V>(key, value);
+                return true;
+            }
+            
+            // Key already exists
+            if (Buckets[probingIndex]?.Key?.Equals(key) is true)
+                return false;
+        }
+
+        return false;
     }
 
     public V? Find(K key)
     {
-        throw new NotImplementedException();
+        if (Buckets is null) return default;
+
+        for (int i = 0; i < Buckets.Length; i++)
+        {
+            var probingIndex = (GetIndex(key) + i) % Buckets.Length; 
+            
+            if (Buckets[probingIndex] is null) continue;
+            
+            // Key already exists
+            if (Buckets[probingIndex]!.Key!.Equals(key))
+                return Buckets[probingIndex]!.Value;
+        }
+        return default;
     }
 
     public bool Delete(K key)
     {
-        throw new NotImplementedException();
+        if (Buckets is null) return default;
+
+        for (int i = 0; i < Buckets.Length; i++)
+        {
+            var probingIndex = (GetIndex(key) + i) % Buckets.Length; 
+            
+            if (Buckets[probingIndex] is null) continue;
+            
+            // Key already exists
+            if (Buckets[probingIndex]!.Key!.Equals(key))
+            {
+                Buckets[probingIndex] = null;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     //DO NOT REMOVE the following method:
