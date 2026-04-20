@@ -2,6 +2,7 @@
 
 public class Graph
 {
+
     public double[,] AdjacencyMatrix { get; set; }
     public int Count => AdjacencyMatrix.GetLength(0); //Number of nodes in the graph
 
@@ -22,7 +23,34 @@ public class Graph
     //Breadth First Traversal
     public string Bft(int root)
     {
-        throw new NotImplementedException();
+        var q = new Queue<int>();
+        q.Enqueue(root);
+
+        var visited = new bool[Count];
+        visited[root] = true;
+
+        var result = string.Empty;
+
+        while (q.Count > 0)
+        {
+            var node = q.Dequeue();
+            visited[node] = true;
+
+            result += $"{node} ";
+
+            var nbs = Neighbors(node);
+
+            foreach (var nb in nbs)
+            {
+                if (!visited[nb])
+                {
+                    q.Enqueue(nb);
+                    visited[nb] = true;
+                }
+            }
+        }
+
+        return result;
     }
     
     /// <summary>
@@ -35,7 +63,32 @@ public class Graph
     //Depth First Traveral
     public string DFT(int root)
     {
-        throw new NotImplementedException();
+        var s = new Stack<int>();
+        s.Push(root);
+
+        var visited = new bool[Count];
+        visited[root] = true;
+
+        var result = string.Empty;
+
+        while (s.Count > 0)
+        {
+            var node = s.Pop();
+            result += $"{node} ";
+
+            var nbs = NeighborsReversed(node);
+
+            foreach (var nb in nbs)
+            {
+                if (!visited[nb])
+                {
+                    s.Push(nb);
+                    visited[nb] = true;
+                }
+            }
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -52,63 +105,53 @@ public class Graph
     //Dijkstra's algorithm SingleSourceShortestPath 
     public Tuple<double[], int[]> SingleSourceShortestPath(int source)
     {
-        // Step 1: Initialize
         var distances = new double[Count];
-        var previousNodes = new int[Count];
-        var visitedNodes = new bool[Count];
-        
-        // Set all distances to infinity, predecessors to -1
+        var previous = new int[Count];
+        var visited = new bool[Count];
+
         for (int i = 0; i < Count; i++)
         {
             distances[i] = double.PositiveInfinity;
-            previousNodes[i] = -1;
+            previous[i] = -1;
         }
-        
-        // Source starts at distance 0
+
         distances[source] = 0;
-        
-        // Step 2: Process all unvisited nodes
+
         while (true)
         {
-            // Find the unvisited node closest to source
-            int closestNode = -1;
-            double closestDistance = double.PositiveInfinity;
-            
+            var closestNode = -1;
+            var closestDistance = double.PositiveInfinity;
+
             for (int i = 0; i < Count; i++)
             {
-                if (!visitedNodes[i] && distances[i] < closestDistance)
+                if (!visited[i] && distances[i] < closestDistance)
                 {
                     closestDistance = distances[i];
                     closestNode = i;
                 }
             }
-            
-            // If no reachable (unvisited) nodes can be found, stop
+
             if (closestNode == -1)
                 break;
-            
-            // Step 3: Update distances to all neighbors of closest
-            visitedNodes[closestNode] = true;
-            var neighbors = Neighbors(closestNode);
-            
-            foreach (int neighbor in neighbors)
+
+            visited[closestNode] = true;
+            var nbs = Neighbors(closestNode);
+
+            foreach (var nb in nbs)
             {
-                if (!visitedNodes[neighbor])
+                if (!visited[nb])
                 {
-                    // Distance through closest node
-                    double newDistance = distances[closestNode] + AdjacencyMatrix[closestNode, neighbor];
-                    
-                    // If shorter path found, update distance and predecessor
-                    if (newDistance < distances[neighbor])
+                    var newDistance = distances[closestNode] + AdjacencyMatrix[closestNode, nb];
+                    if (newDistance < distances[nb])
                     {
-                        distances[neighbor] = newDistance;
-                        previousNodes[neighbor] = closestNode;
+                        distances[nb] = newDistance;
+                        previous[nb] = closestNode;
                     }
                 }
             }
         }
-        
-        return new Tuple<double[], int[]>(distances, previousNodes);
+
+        return new Tuple<double[], int[]>(distances, previous);
     }
     
     // UTILITY METHODS
