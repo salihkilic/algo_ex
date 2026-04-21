@@ -26,20 +26,16 @@ public class Graph
         var q = new Queue<int>();
         q.Enqueue(root);
 
+        var result = string.Empty;
         var visited = new bool[Count];
         visited[root] = true;
-
-        var result = string.Empty;
 
         while (q.Count > 0)
         {
             var node = q.Dequeue();
-            visited[node] = true;
-
             result += $"{node} ";
 
             var nbs = Neighbors(node);
-
             foreach (var nb in nbs)
             {
                 if (!visited[nb])
@@ -126,8 +122,8 @@ public class Graph
             {
                 if (!visited[i] && distances[i] < closestDistance)
                 {
-                    closestDistance = distances[i];
                     closestNode = i;
+                    closestDistance = distances[i];
                 }
             }
 
@@ -150,7 +146,7 @@ public class Graph
                 }
             }
         }
-
+        
         return new Tuple<double[], int[]>(distances, previous);
     }
     

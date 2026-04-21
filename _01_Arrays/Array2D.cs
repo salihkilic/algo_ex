@@ -12,7 +12,20 @@ public class Array2D
     // Output: {3, 7}
     public static T[]? RowSum<T>(T[,] arr2D) where T : INumber<T>
     {
-        throw new NotImplementedException();
+        var n = arr2D.GetLength(0);
+        var m = arr2D.GetLength(1);
+        
+        var result = new T[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j< m; j++)
+            {
+                result[i] += arr2D[i, j];
+            }
+        }
+
+        return result;
     }
     
     // TODO: Calculate the sum of each column in the 2D array.
@@ -25,6 +38,19 @@ public class Array2D
     // Output: {4, 6}
     public static T[]? ColSum<T>(T[,] arr2D) where T : INumber<T>
     {
-        throw new NotImplementedException();
+        var n = arr2D.GetLength(0);
+        var m = arr2D.GetLength(1);
+        
+        var result = new T[m];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j< m; j++)
+            {
+                result[j] += arr2D[i, j];
+            }
+        }
+
+        return result;
     }
 }

@@ -74,6 +74,17 @@ TestRunner.RunTest("Max: Standard", () =>
     Assertions.AssertEqual(arr.Max(), expected);
 }, "Hint: Initialize max with the first element, then compare with others.");
 
+// Test 6b: Max with All Negative
+// Purpose: Ensures Max() works correctly when all values are negative.
+// If initialized to 0, it would return 0 instead of the actual maximum.
+TestRunner.RunTest("Max: All Negative", () =>
+{
+    int[] data = [-10, -50, -30];
+    var arr = new NumArray1D<int>(data);
+    int expected = -10;
+    Assertions.AssertEqual(arr.Max(), expected);
+}, "Hint: Initialize max with the first element, not with a default value like 0.");
+
 // Test 7: Min with Negatives
 // Purpose: Edge case. If initialized to 0, it might return 0 instead of a negative min.
 TestRunner.RunTest("Min: Negatives", () =>
@@ -84,10 +95,21 @@ TestRunner.RunTest("Min: Negatives", () =>
     Assertions.AssertEqual(arr.Min(), expected);
 }, "Hint: Initialize min with the first element. Be careful with 0 or high default values.");
 
+// Test 8: Min with All Positive
+// Purpose: Ensures Min() works correctly when all values are positive.
+// If initialized to 0, it would return 0 instead of the actual minimum.
+TestRunner.RunTest("Min: All Positive", () =>
+{
+    int[] data = [10, 50, 30];
+    var arr = new NumArray1D<int>(data);
+    int expected = 10;
+    Assertions.AssertEqual(arr.Min(), expected);
+}, "Hint: Initialize min with the first element, not with a default value like 0.");
+
 // --- Aggregate Tests ---
 Console.WriteLine("\nTesting Aggregate...");
 
-// Test 8: Aggregate Sum
+// Test 9: Aggregate Sum
 // Purpose: Verify the generic accumulation logic works with a custom addition lambda.
 TestRunner.RunTest("Aggregate: Sum Lambda", () =>
 {
@@ -98,7 +120,7 @@ TestRunner.RunTest("Aggregate: Sum Lambda", () =>
     Assertions.AssertEqual(result, expected);
 }, "Hint: The 'fx' function takes accumulated value and current value.");
 
-// Test 9: Aggregate Max
+// Test 10: Aggregate Max
 // Purpose: Verify the comparison logic works within the generic aggregate function.
 TestRunner.RunTest("Aggregate: Max Lambda", () =>
 {

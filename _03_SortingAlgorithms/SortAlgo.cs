@@ -4,9 +4,6 @@ public class SortAlgo<T> where T : IComparable<T>
 {
     public static void BubbleSort(T[] data)
     {
-        // Also known as swapsort!
-        // As long as we swapped the last while, we iterate the array and swap values next to each other when they're in the wrong order.
-
         var swapped = true;
 
         while (swapped)
@@ -15,10 +12,10 @@ public class SortAlgo<T> where T : IComparable<T>
 
             for (int i = 1; i < data.Length; i++)
             {
-                if (data[i - 1].CompareTo(data[i]) == 1)
+                if (data[i].CompareTo(data[i - 1]) == -1)
                 {
-                    swapped = true;
                     (data[i], data[i - 1]) = (data[i - 1], data[i]);
+                    swapped = true;
                 }
             }
         }
@@ -32,10 +29,7 @@ public class SortAlgo<T> where T : IComparable<T>
             var previousIndex = i - 1;
 
             while (previousIndex >= 0 && data[previousIndex].CompareTo(temp) == 1)
-            {
-                data[previousIndex + 1] = data[previousIndex];
-                previousIndex--;
-            }
+                data[previousIndex + 1] = data[previousIndex--];
 
             data[previousIndex + 1] = temp;
         }
@@ -48,7 +42,7 @@ public class SortAlgo<T> where T : IComparable<T>
             var mid = (low + high) / 2;
             
             MergeSort(array, low, mid);
-            MergeSort(array, mid + 1, high);
+            MergeSort(array, mid+1, high);
             Merge(array, low, mid, high);
         }
     }
@@ -67,7 +61,7 @@ public class SortAlgo<T> where T : IComparable<T>
             else
                 results[resultIndex++] = array[rightIndex++];
         }
-        
+
         while (leftIndex <= mid)
             results[resultIndex++] = array[leftIndex++];
         

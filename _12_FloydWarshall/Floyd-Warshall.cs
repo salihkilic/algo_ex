@@ -20,23 +20,23 @@ public class FloydWarshall
     public static Tuple<double[,], int[,]> Init(double[,] graph)
     {
         var n = graph.GetLength(0);
-        var dist = new double[n, n];
+        var distances = new double[n, n];
         var next = new int[n, n];
 
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
             {
-                dist[i, j] = graph[i, j];
+                distances[i, j] = graph[i, j];
                 var isInfinite = double.IsPositiveInfinity(graph[i, j]);
                 next[i, j] = isInfinite ? -1 : j;
             }
 
-            dist[i, i] = 0;
+            distances[i, i] = 0;
             next[i, i] = -1;
         }
-
-        return new Tuple<double[,], int[,]>(dist, next);
+       
+        return new Tuple<double[,], int[,]>(distances, next);
     }
     
     /// <summary>
@@ -59,12 +59,11 @@ public class FloydWarshall
             {
                 for (int j = 0; j < n; j++)
                 {
-                    var newDist = dist[i, k] + dist[k, j];
-                    var oldDist = dist[i, j];
-
-                    if (newDist < oldDist)
+                    var newDistance = dist[i, k] + dist[k, j];
+                    var oldDistance = dist[i, j];
+                    if (newDistance < oldDistance)
                     {
-                        dist[i, j] = newDist;
+                        dist[i, j] = newDistance;
                         next[i, j] = next[i, k];
                     }
                 }
@@ -74,3 +73,31 @@ public class FloydWarshall
         return new Tuple<double[,], int[,]>(dist, next);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

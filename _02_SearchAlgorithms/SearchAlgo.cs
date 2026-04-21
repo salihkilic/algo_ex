@@ -55,23 +55,21 @@ public class SearchAlgo<T> where T : IComparable<T>
         if (low > high) return -1;
 
         var mid = (low + high) / 2;
-        
+
         switch (v.CompareTo(a[mid]))
         {
+            // Left
+            case -1:
+                return BinarySearchRecursive(a,v,low,mid-1);
+            // Found
             case 0:
                 return mid;
-                
-            // Item is lower than data[mid]
-            case -1:
-                high = mid - 1;
-                break;
-                
-            // Item is higher than data[mid]
+            // Right
             case 1:
-                low = mid + 1;
-                break;
+                return BinarySearchRecursive(a,v,mid+1, high);
         }
-        
-        return BinarySearchRecursive(a, v, low, high);
+
+        // Something went wrong
+        return -2;
     }
 }
