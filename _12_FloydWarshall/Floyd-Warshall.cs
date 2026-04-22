@@ -27,7 +27,7 @@ public class FloydWarshall
         {
             for (int j = 0; j < n; j++)
             {
-                distances[i, j] = graph[i, j];
+                distances[i, j] = graph[i,j];
                 var isInfinite = double.IsPositiveInfinity(graph[i, j]);
                 next[i, j] = isInfinite ? -1 : j;
             }
@@ -35,10 +35,10 @@ public class FloydWarshall
             distances[i, i] = 0;
             next[i, i] = -1;
         }
-       
+        
         return new Tuple<double[,], int[,]>(distances, next);
     }
-    
+
     /// <summary>
     /// Executes the Floyd-Warshall algorithm to find the All-Pairs Shortest Paths.
     /// </summary>

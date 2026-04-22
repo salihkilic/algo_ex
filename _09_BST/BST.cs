@@ -171,12 +171,11 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
             {
                 Root = replacement;
                 replacement?.Parent = null;
-                return true;
             }
 
-            if (nodeToDelete.Parent.Left == nodeToDelete)
+            if (nodeToDelete.Parent?.Left == nodeToDelete)
                 nodeToDelete.Parent.Left = replacement;
-            else
+            else if (nodeToDelete.Parent?.Right == nodeToDelete)
                 nodeToDelete.Parent.Right = replacement;
 
             replacement?.Parent = nodeToDelete.Parent;
@@ -184,13 +183,9 @@ public class Bst<T> : IBst<T> where T : IComparable<T>
         }
         
         // Two children
-        var successor = nodeToDelete.Right;
-        while (successor.Left is not null)
-            successor = successor.Left;
-
+        var successor = FindInOrderSucc(nodeToDelete);
         nodeToDelete.Value = successor.Value;
         return Delete(successor);
-
     }
 
     // This methods finds the in order successor of the node given as parameter

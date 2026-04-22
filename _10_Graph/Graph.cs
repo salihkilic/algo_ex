@@ -101,17 +101,17 @@ public class Graph
     //Dijkstra's algorithm SingleSourceShortestPath 
     public Tuple<double[], int[]> SingleSourceShortestPath(int source)
     {
-        var distances = new double[Count];
+        var distance = new double[Count];
         var previous = new int[Count];
         var visited = new bool[Count];
 
         for (int i = 0; i < Count; i++)
         {
-            distances[i] = double.PositiveInfinity;
+            distance[i] = double.PositiveInfinity;
             previous[i] = -1;
         }
 
-        distances[source] = 0;
+        distance[source] = 0;
 
         while (true)
         {
@@ -120,10 +120,10 @@ public class Graph
 
             for (int i = 0; i < Count; i++)
             {
-                if (!visited[i] && distances[i] < closestDistance)
+                if (!visited[i] && distance[i] < closestDistance)
                 {
                     closestNode = i;
-                    closestDistance = distances[i];
+                    closestDistance = distance[i];
                 }
             }
 
@@ -137,17 +137,17 @@ public class Graph
             {
                 if (!visited[nb])
                 {
-                    var newDistance = distances[closestNode] + AdjacencyMatrix[closestNode, nb];
-                    if (newDistance < distances[nb])
+                    var newDistance = distance[closestNode] + AdjacencyMatrix[closestNode, nb];
+                    if (newDistance < distance[nb])
                     {
-                        distances[nb] = newDistance;
+                        distance[nb] = newDistance;
                         previous[nb] = closestNode;
                     }
                 }
             }
         }
         
-        return new Tuple<double[], int[]>(distances, previous);
+        return new Tuple<double[], int[]>(distance, previous);
     }
     
     // UTILITY METHODS

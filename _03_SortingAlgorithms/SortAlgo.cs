@@ -14,8 +14,8 @@ public class SortAlgo<T> where T : IComparable<T>
             {
                 if (data[i].CompareTo(data[i - 1]) == -1)
                 {
-                    (data[i], data[i - 1]) = (data[i - 1], data[i]);
                     swapped = true;
+                    (data[i], data[i - 1]) = (data[i - 1], data[i]);
                 }
             }
         }
@@ -29,7 +29,9 @@ public class SortAlgo<T> where T : IComparable<T>
             var previousIndex = i - 1;
 
             while (previousIndex >= 0 && data[previousIndex].CompareTo(temp) == 1)
+            {
                 data[previousIndex + 1] = data[previousIndex--];
+            }
 
             data[previousIndex + 1] = temp;
         }
@@ -42,14 +44,14 @@ public class SortAlgo<T> where T : IComparable<T>
             var mid = (low + high) / 2;
             
             MergeSort(array, low, mid);
-            MergeSort(array, mid+1, high);
+            MergeSort(array, mid + 1, high);
             Merge(array, low, mid, high);
         }
     }
 
     public static void Merge(T[] array, int low, int mid, int high)
     {
-        var results = new T[high - low + 1];
+        var result = new T[high - low + 1];
         var resultIndex = 0;
         var leftIndex = low;
         var rightIndex = mid + 1;
@@ -57,20 +59,20 @@ public class SortAlgo<T> where T : IComparable<T>
         while (leftIndex <= mid && rightIndex <= high)
         {
             if (array[leftIndex].CompareTo(array[rightIndex]) == -1)
-                results[resultIndex++] = array[leftIndex++];
+                result[resultIndex++] = array[leftIndex++];
             else
-                results[resultIndex++] = array[rightIndex++];
+                result[resultIndex++] = array[rightIndex++];
         }
-
+        
         while (leftIndex <= mid)
-            results[resultIndex++] = array[leftIndex++];
+            result[resultIndex++] = array[leftIndex++];
         
         while (rightIndex <= high)
-            results[resultIndex++] = array[rightIndex++];
+            result[resultIndex++] = array[rightIndex++];
 
-        for (int i = 0; i < results.Length; i++)
+        for (int i = 0; i < result.Length; i++)
         {
-            array[low + i] = results[i];
+            array[low + i] = result[i];
         }
     }
 }
